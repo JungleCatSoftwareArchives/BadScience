@@ -3,10 +3,9 @@ package brwyatt.badscience;
 import java.util.ArrayList;
 
 import brwyatt.brge.Game;
-import brwyatt.brge.examplegame.levels.ExampleLevel;
-import brwyatt.brge.examplegame.levels.ExampleMenu;
 import brwyatt.brge.graphics.ScreenObjects;
 import brwyatt.brge.levels.Level;
+import brwyatt.badscience.levels.MainMenu;
 
 public class BadScience extends Game {
 	private final String title="Bad Science!";
@@ -17,8 +16,7 @@ public class BadScience extends Game {
 		screenObjects=so;
 		levels=new ArrayList<Level>();
 
-		levels.add(new ExampleMenu(this, screenObjects));
-		levels.add(new ExampleLevel(this, screenObjects));
+		levels.add(new MainMenu(this, screenObjects));
 	}
 	
 	public void startGame() {
