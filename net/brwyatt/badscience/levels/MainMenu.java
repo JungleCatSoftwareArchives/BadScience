@@ -25,7 +25,7 @@ public class MainMenu extends Level{
 		screenObjects.addToTop(new MainMenuBackground());
 
 		items=new ArrayList<MenuItem>();
-		items.add(new MenuItem(0, true, "NULL"));
+		items.add(new MenuItem(0, true, "TEST LEVEL"));
 		items.add(new MenuItem(4, "Exit"));
 		screenObjects.addToTop(items.get(0));
 		screenObjects.addToTop(items.get(1));
@@ -55,7 +55,7 @@ public class MainMenu extends Level{
 	private void menuActivated(){
 		switch(selectedItem){
 			case 0:
-				//game.loadLevel(1);
+				game.loadLevel(1);
 				break;
 			case 1:
 				BRGE.exit();

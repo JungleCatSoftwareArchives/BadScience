@@ -3,6 +3,7 @@ package net.brwyatt.badscience;
 import java.util.ArrayList;
 
 import net.brwyatt.badscience.levels.MainMenu;
+import net.brwyatt.badscience.levels.TestLevel;
 import net.brwyatt.brge.Game;
 import net.brwyatt.brge.graphics.ScreenObjects;
 import net.brwyatt.brge.levels.Level;
@@ -16,8 +17,9 @@ public class BadScience extends Game {
 	public BadScience(ScreenObjects so){
 		screenObjects=so;
 		levels=new ArrayList<Level>();
-
+		
 		levels.add(new MainMenu(this, screenObjects));
+		levels.add(new TestLevel(this, screenObjects));
 	}
 	
 	public void startGame() {
