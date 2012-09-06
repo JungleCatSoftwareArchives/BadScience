@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 import net.brwyatt.badscience.drawables.FloorTile;
 import net.brwyatt.brge.Game;
-import net.brwyatt.brge.examplegame.drawables.PauseMenuOverlayBackground;
+import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
 import net.brwyatt.brge.graphics.ScreenObjects;
 import net.brwyatt.brge.graphics.drawables.BlackBackground;
 import net.brwyatt.brge.graphics.drawables.MenuItem;

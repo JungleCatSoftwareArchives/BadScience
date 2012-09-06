@@ -12,7 +12,7 @@ public class MainMenuBackground implements Drawable {
 	private int x=0;
 	private int y=0;
 
-	private Color bgColor=Color.GRAY;
+	private Color bgColor=Color.DARK_GRAY;
 	private Color fgColor=Color.RED;
 
 	public void draw(Graphics g) {
