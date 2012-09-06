@@ -1,13 +1,14 @@
-package brwyatt.badscience.levels;
+package net.brwyatt.badscience.levels;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import brwyatt.brge.BRGE;
-import brwyatt.brge.Game;
-import brwyatt.brge.graphics.ScreenObjects;
-import brwyatt.brge.graphics.drawables.MenuItem;
-import brwyatt.brge.levels.Level;
-import brwyatt.badscience.drawables.MainMenuBackground;
+
+import net.brwyatt.badscience.drawables.MainMenuBackground;
+import net.brwyatt.brge.BRGE;
+import net.brwyatt.brge.Game;
+import net.brwyatt.brge.graphics.ScreenObjects;
+import net.brwyatt.brge.graphics.drawables.MenuItem;
+import net.brwyatt.brge.levels.Level;
 
 public class MainMenu extends Level{
 	
