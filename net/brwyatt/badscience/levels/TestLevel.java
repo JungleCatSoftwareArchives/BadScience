@@ -2,6 +2,7 @@ package net.brwyatt.badscience.levels;
 
 import java.awt.event.KeyEvent;
 
+import net.brwyatt.badscience.drawables.BackgroundGrid;
 import net.brwyatt.badscience.drawables.FloorTile;
 import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
@@ -25,14 +26,15 @@ public class TestLevel extends Level{
 
 	public void startLevel() {
 		screenObjects.clear();
-		
-		screenObjects.addToBottom(new BlackBackground());
 
-		for(int y=0;y<600;y+=50){
-			for(int x=0;x<800;x+=50){
-				screenObjects.addToTop(new FloorTile(x,y));
-			}
-		}
+		screenObjects.addToBottom(new BlackBackground());
+		screenObjects.addToTop(new BackgroundGrid());
+
+		//for(int y=0;y<600;y+=50){
+		//	for(int x=0;x<800;x+=50){
+		//		screenObjects.addToTop(new FloorTile(x,y));
+		//	}
+		//}
 
 		t=new Thread(){ public void run(){ runGame(); }};
 		t.start();
