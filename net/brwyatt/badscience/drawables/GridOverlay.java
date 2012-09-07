@@ -32,7 +32,7 @@ public class GridOverlay implements Drawable {
 
 		//horizontal lines
 		int yPos=600;
-		for(int d=0;yPos>=0;d++){
+		for(int d=-1;yPos>=0;d++){
 			if(d==0){
 				yPos=height;
 			}else{
