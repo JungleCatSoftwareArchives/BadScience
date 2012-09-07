@@ -26,9 +26,11 @@ public class MainMenu extends Level{
 
 		items=new ArrayList<MenuItem>();
 		items.add(new MenuItem(0, true, "TEST LEVEL"));
+		items.add(new MenuItem(1, "Toggle DrawFPS"));
 		items.add(new MenuItem(4, "Exit"));
 		screenObjects.addToTop(items.get(0));
 		screenObjects.addToTop(items.get(1));
+		screenObjects.addToTop(items.get(2));
 		
 		selectedItem=0;
 	}
@@ -58,6 +60,9 @@ public class MainMenu extends Level{
 				game.loadLevel(1);
 				break;
 			case 1:
+				BRGE.toggleFPS();
+				break;
+			case 2:
 				BRGE.exit();
 				break;
 		}
