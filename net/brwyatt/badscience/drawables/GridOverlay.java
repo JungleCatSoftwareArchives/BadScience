@@ -24,8 +24,10 @@ public class GridOverlay implements Drawable {
 		g.setColor(lineColor); //set color
 		
 		//vertical lines
-		for(int startX=-350;startX<=1150;startX+=100){
-			g.drawLine(startX, 600, vanishingX, vanishingY);
+		int centerX=width/2;
+		for(int offset=50;offset<=650;offset+=100){
+			g.drawLine(centerX+offset, 600, vanishingX, vanishingY);
+			g.drawLine(centerX-offset, 600, vanishingX, vanishingY);
 		}//First and last can't be seen, but are still boundary lines (They border empty space that CAN be seen)
 
 		//horizontal lines
