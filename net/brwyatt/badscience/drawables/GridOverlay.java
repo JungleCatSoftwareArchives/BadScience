@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import net.brwyatt.brge.graphics.drawables.Drawable;
 
-public class BackgroundGrid implements Drawable {
+public class GridOverlay implements Drawable {
 	private int width=800;
 	private int height=600;
 
