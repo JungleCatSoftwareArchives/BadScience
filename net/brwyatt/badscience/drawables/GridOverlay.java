@@ -17,6 +17,7 @@ public class GridOverlay implements Drawable {
 
 	private Color lineColor=Color.WHITE;
 	private Color boxColor=Color.RED;
+	private Color dotColor=Color.BLUE;
 
 	public void draw(Graphics g) {
 		Color tmp=g.getColor();
@@ -40,6 +41,43 @@ public class GridOverlay implements Drawable {
 			}
 			g.drawLine(0, yPos, 800, yPos);
 		}
+		
+		
+		//Find all intersections
+		System.out.println("*******************");
+		g.setColor(dotColor); //set color
+		centerX=width/2;
+		for(int offset=50;offset<=650;offset+=100){
+			//(400,-1000)
+			
+			// y = (offset/(vanishingY-height))*x + (vanishingY-((offset/(vanishingY-height))*vanishingX)
+			double leftM=((vanishingY-height)/((double)offset));
+			double leftB=(vanishingY-(leftM*vanishingX));
+			System.out.println("LEFT: y=("+leftM+")*x+("+leftB+")");
+			
+			// y = ((-offset)/(vanishingY-height))*x + (vanishingY-(((-offset)/(vanishingY-height))*vanishingX)
+			double rightM=((vanishingY-height)/(-((double)offset)));
+			double rightB=(vanishingY-(rightM*vanishingX));
+			System.out.println("RIGHT: y=("+rightM+")*x+("+rightB+")");
+			
+
+			yPos=600;
+			for(int d=-1;yPos>=0;d++){
+				if(d==0){
+					yPos=height;
+				}else{
+					yPos=(int) Math.round((height-(100*(48/((Math.sqrt(1872)/d)+3)))));
+				}
+				int leftX = (int)Math.round((yPos-leftB)/leftM);
+				System.out.println("LEFT: ("+leftX+","+yPos+")");
+				g.fillRect(leftX-1, yPos-1, 3, 3);
+				int rightX = (int)Math.round((yPos-rightB)/rightM);
+				System.out.println("RIGHT: ("+rightX+","+yPos+")");
+				g.fillRect(rightX-1, yPos-1, 3, 3);
+			}
+		}
+		
+		
 		
 		//draw center reference box
 		g.setColor(boxColor);
