@@ -12,36 +12,27 @@ public class BackgroundGrid implements Drawable {
 	private int x=0;
 	private int y=0;
 
+	private int vanishingX=400;
+	private int vanishingY=-1000;
+
 	private Color lineColor=Color.WHITE;
-	private Color dotColor=Color.RED;
+	private Color boxColor=Color.RED;
 
 	public void draw(Graphics g) {
 		Color tmp=g.getColor();
 		
 		g.setColor(lineColor); //set color
+		
+		//vertical lines
+		for(int startX=-350;startX<=1150;startX+=100){
+			g.drawLine(startX, 600, vanishingX, vanishingY);
+		}//First and last can't be seen, but are still boundary lines (They border empty space that CAN be seen)
 
-		g.drawLine(-350, 600, 400, -1000); //can't be seen, but is still a boundary line
-		g.drawLine(-250, 600, 400, -1000);
-		g.drawLine(-150, 600, 400, -1000);
-		g.drawLine(-50, 600, 400, -1000);
-		g.drawLine(50, 600, 400, -1000);
-		g.drawLine(150, 600, 400, -1000);
-		g.drawLine(250, 600, 400, -1000);
-		g.drawLine(350, 600, 400, -1000);
-		g.drawLine(450, 600, 400, -1000);
-		g.drawLine(550, 600, 400, -1000);
-		g.drawLine(650, 600, 400, -1000);
-		g.drawLine(750, 600, 400, -1000);
-		g.drawLine(850, 600, 400, -1000);
-		g.drawLine(950, 600, 400, -1000);
-		g.drawLine(1050, 600, 400, -1000);
-		g.drawLine(1150, 600, 400, -1000); //can't be seen, but is still a boundary line
-
+		//horizontal lines
 		g.drawLine(0, 600, 800, 600);
 		
-		g.setColor(dotColor);
-		//g.fillRect(399, 599, 3, 3);
-		//g.fillRect(399, 499, 3, 3);
+		//draw center reference box
+		g.setColor(boxColor);
 		g.drawRect(350,250,100,100);
 		
 		g.setColor(tmp); //reset color
