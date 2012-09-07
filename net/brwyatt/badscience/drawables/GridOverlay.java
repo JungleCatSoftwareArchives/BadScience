@@ -31,7 +31,14 @@ public class GridOverlay implements Drawable {
 		}//First and last can't be seen, but are still boundary lines (They border empty space that CAN be seen)
 
 		//horizontal lines
-		g.drawLine(0, 600, 800, 600);
+		double scale=0.95;
+		int boxHeight=100;
+		int pos=600;
+		while(pos>0){
+			g.drawLine(0, pos, 800, pos);
+			boxHeight*=scale;
+			pos-=boxHeight;
+		}
 		
 		//draw center reference box
 		g.setColor(boxColor);
