@@ -36,7 +36,7 @@ public class GridOverlay implements Drawable {
 			if(d==0){
 				yPos=height;
 			}else{
-				yPos=(int)(height-(100*(48/((Math.sqrt(1872)/d)+3))));
+				yPos=(int) Math.round((height-(100*(48/((Math.sqrt(1872)/d)+3)))));
 			}
 			g.drawLine(0, yPos, 800, yPos);
 		}
