@@ -44,7 +44,7 @@ public class GridOverlay implements Drawable {
 		
 		
 		//Find all intersections
-		System.out.println("*******************");
+		//System.out.println("*******************");
 		g.setColor(dotColor); //set color
 		centerX=width/2;
 		for(int offset=50;offset<=650;offset+=100){
