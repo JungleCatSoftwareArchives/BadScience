@@ -1,5 +1,7 @@
 package net.brwyatt.badscience;
 
+import java.awt.Polygon;
+
 public class LevelGridSquare {
 	private LevelGridPoint topLeft;
 	private LevelGridPoint topRight;
@@ -43,5 +45,13 @@ public class LevelGridSquare {
 
 	public void setBottomRight(LevelGridPoint bottomRight) {
 		this.bottomRight = bottomRight;
+	}
+	public Polygon getPolygon(){
+		Polygon p=new Polygon();
+		p.addPoint(topLeft.getX(), topLeft.getY());
+		p.addPoint(topRight.getX(), topRight.getY());
+		p.addPoint(bottomRight.getX(), bottomRight.getY());
+		p.addPoint(bottomLeft.getX(), bottomLeft.getY());
+		return p;
 	}
 }
