@@ -19,6 +19,7 @@ public class TestLevel extends Level{
 	private boolean run=true;
 	private boolean pause=false;
 	private Thread t;
+	private FloorTile floorTile;
 	
 	private LevelGrid levelGrid;
 	
@@ -37,11 +38,13 @@ public class TestLevel extends Level{
 		screenObjects.clear();
 
 		screenObjects.addToBottom(new BlackBackground());
+		floorTile=new FloorTile(levelGrid.getGridSquare(7, 2));
+		screenObjects.addToTop(floorTile);
 		screenObjects.addToTop(new GridOverlay(levelGrid));
-
+		
 		//for(int y=0;y<600;y+=50){
 		//	for(int x=0;x<800;x+=50){
-		//		screenObjects.addToTop(new FloorTile(x,y));
+		//		screenObjects.addToTop(new FloorTile(levelGrid.getGridSquare(x, y)));
 		//	}
 		//}
 
@@ -108,6 +111,9 @@ public class TestLevel extends Level{
 	private void runGame(){
 		run=true;
 		int counter=1; //tick-tock counter
+		int x=7;
+		int y=2;
+		boolean down=true;
 		while(run){
 			
 			if(pause){//if game has been paused
@@ -126,6 +132,21 @@ public class TestLevel extends Level{
 				screenObjects.remove(item1);
 			}
 			
+			if(counter==1){
+				if(down){
+					y++;
+				}else{
+					y--;
+				}
+				if(y>=8){
+					down=false;
+				}else{
+					if(y<=2){
+						down=true;
+					}
+				}
+				floorTile.transitionGridSquare(levelGrid.getGridSquare(x, y));
+			}
 			
 			wait(1);//pause
 			//tick-tock counter incrementing
