@@ -37,7 +37,7 @@ public class TestLevel extends Level{
 		screenObjects.clear();
 
 		screenObjects.addToBottom(new BlackBackground());
-		screenObjects.addToTop(new GridOverlay());
+		screenObjects.addToTop(new GridOverlay(levelGrid));
 
 		//for(int y=0;y<600;y+=50){
 		//	for(int x=0;x<800;x+=50){
