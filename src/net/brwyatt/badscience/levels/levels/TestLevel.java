@@ -1,5 +1,6 @@
 package net.brwyatt.badscience.levels.levels;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import net.brwyatt.badscience.drawables.GridOverlay;
@@ -19,7 +20,11 @@ public class TestLevel extends Level{
 	private boolean run=true;
 	private boolean pause=false;
 	private Thread t;
-	private FloorTile floorTile;
+	private FloorTile floorTile1;
+	private FloorTile floorTile2;
+	private FloorTile floorTile3;
+	private GridOverlay overlay;
+	private boolean showOverlay;
 	
 	private LevelGrid levelGrid;
 	
@@ -38,9 +43,15 @@ public class TestLevel extends Level{
 		screenObjects.clear();
 
 		screenObjects.addToBottom(new BlackBackground());
-		floorTile=new FloorTile(levelGrid.getGridSquare(7, 2));
-		screenObjects.addToTop(floorTile);
-		screenObjects.addToTop(new GridOverlay(levelGrid));
+		floorTile1=new FloorTile(levelGrid.getGridSquare(7, 2),Color.YELLOW);
+		screenObjects.addToTop(floorTile1);
+		floorTile2=new FloorTile(levelGrid.getGridSquare(3, 8),Color.BLUE);
+		screenObjects.addToTop(floorTile2);
+		floorTile3=new FloorTile(levelGrid.getGridSquare(3, 1),Color.GREEN);
+		screenObjects.addToTop(floorTile3);
+		overlay=new GridOverlay(levelGrid);
+		showOverlay=true;
+		screenObjects.addToTop(overlay);
 		
 		//for(int y=0;y<600;y+=50){
 		//	for(int x=0;x<800;x+=50){
@@ -101,6 +112,17 @@ public class TestLevel extends Level{
 					game.loadLevel(0);
 				}
 				break;
+			case KeyEvent.VK_G:
+				if(!pause){
+					if(showOverlay){
+						showOverlay=false;
+						screenObjects.remove(overlay);
+					}else{
+						showOverlay=true;
+						screenObjects.addToTop(overlay);
+					}
+				}
+				break;
 		}
 	}
 	public void keyTyped(int key) {
@@ -111,9 +133,15 @@ public class TestLevel extends Level{
 	private void runGame(){
 		run=true;
 		int counter=1; //tick-tock counter
-		int x=7;
-		int y=2;
 		boolean down=true;
+		int x1=7;
+		int y1=2;
+		boolean right=true;
+		int x2=3;
+		int y2=8;
+		boolean downright=true;
+		int x3=3;
+		int y3=1;
 		while(run){
 			
 			if(pause){//if game has been paused
@@ -133,19 +161,52 @@ public class TestLevel extends Level{
 			}
 			
 			if(counter==1){
+				//tile1
 				if(down){
-					y++;
+					y1++;
 				}else{
-					y--;
+					y1--;
 				}
-				if(y>=8){
+				if(y1>=8){
 					down=false;
 				}else{
-					if(y<=2){
+					if(y1<=2){
 						down=true;
 					}
 				}
-				floorTile.transitionGridSquare(levelGrid.getGridSquare(x, y));
+				floorTile1.transitionGridSquare(levelGrid.getGridSquare(x1, y1));
+				
+				//tile2
+				if(right){
+					x2++;
+				}else{
+					x2--;
+				}
+				if(x2>=11){
+					right=false;
+				}else{
+					if(x2<=3){
+						right=true;
+					}
+				}
+				floorTile2.transitionGridSquare(levelGrid.getGridSquare(x2, y2));
+
+				//tile3
+				if(downright){
+					y3++;
+					x3++;
+				}else{
+					y3--;
+					x3--;
+				}
+				if(x3>=10||y3>=8){
+					downright=false;
+				}else{
+					if(x3<=3||y3<=1){
+						downright=true;
+					}
+				}
+				floorTile3.transitionGridSquare(levelGrid.getGridSquare(x3, y3));
 			}
 			
 			wait(1);//pause
