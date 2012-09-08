@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BadScience" default="compile" basedir=".">
+	<description>Build and Package BadScience</description>
+	
+	<!-- set global properties for this build -->
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="artifacts"  location="artifacts"/>
+	<property environment="env" />
+	<property name="buildId"  value="${env.GIT_BRANCH}-${env.BUILD_NUMBER}"/>
+	
+	<path id="master-classpath">
+	  <fileset dir="lib">
+	    <include name="*.jar"/>
+	  </fileset>
+
+	  <pathelement path="${build.dir}"/>
+	</path>
+	
+	<target name="init" depends="clean">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+		<!-- Create the artifact directory -->
+		<mkdir dir="${artifacts}"/>
+	</target>
+	
+	<target name="compile" depends="init" description="compile the source " >
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}" >
+				<classpath refid="master-classpath"/>
+		</javac>
+	</target>
+	
+	<target name="package-BadScience-BRGE" description="generate the jarfiles" >
+		<!-- Put everything in ${build} into the BadScience-BRGE-${buildId}.jar file (and make it run Bad Science!) -->
+		<jar jarfile="${artifacts}/BadScience-BRGE-${buildId}.jar" basedir="${build}">
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips>
+						<fileset dir="lib" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			<manifest>
+				<attribute name="Main-Class" value="net.brwyatt.badscience.Main"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="package-BadScience" description="generate the jarfiles" >
+		<!-- Put only the BadScience in ${build} into the BadScience-${buildId}.jar file (and make it run Bad Science!) -->
+		<jar jarfile="${artifacts}/BadScience-${buildId}.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="net.brwyatt.badscience.Main"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="package" description="generate the jarfiles" >
+		<antcall target="package-BadScience-BRGE" />
+		<antcall target="package-BadScience" />
+	</target>
+	
+	<target name="clean" description="clean up" >
+		<!-- Delete the ${build} and ${artifacts} directory trees -->
+		<delete dir="${build}"/>
+		<delete dir="${artifacts}"/>
+	</target>
+	
+</project>
