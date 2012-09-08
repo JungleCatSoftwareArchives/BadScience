@@ -12,17 +12,23 @@ public class FloorTile implements Drawable {
 	private LevelGridSquare transitionGridSquare;
 	private LevelGridSquare nextGridSquare;
 	private int stepScale;
-	private Color bgColor=Color.GRAY;
-	private Color fgColor=Color.DARK_GRAY;
+	private Color bgColor;
 	
 	public FloorTile(LevelGridSquare gridSquare){
-		this(gridSquare,50);
+		this(gridSquare,50,Color.GRAY);
 	}
 	public FloorTile(LevelGridSquare gridSquare,int stepScale){
+		this(gridSquare,stepScale,Color.GRAY);
+	}
+	public FloorTile(LevelGridSquare gridSquare,Color color){
+		this(gridSquare,50,color);
+	}
+	public FloorTile(LevelGridSquare gridSquare,int stepScale,Color color){
 		this.gridSquare=gridSquare;
 		this.transitionGridSquare=null;
 		this.nextGridSquare=null;
 		this.stepScale=stepScale;
+		this.bgColor=color;
 	}
 	
 	public void draw(Graphics g) {
