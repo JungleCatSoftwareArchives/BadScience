@@ -1,4 +1,4 @@
-package net.brwyatt.badscience.levels;
+package net.brwyatt.badscience.levels.menus;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;

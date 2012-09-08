@@ -1,4 +1,4 @@
-package net.brwyatt.badscience.levels;
+package net.brwyatt.badscience.levels.levels;
 
 import java.awt.event.KeyEvent;
 

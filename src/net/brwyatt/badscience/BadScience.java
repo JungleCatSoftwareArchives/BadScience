@@ -2,8 +2,8 @@ package net.brwyatt.badscience;
 
 import java.util.ArrayList;
 
-import net.brwyatt.badscience.levels.MainMenu;
-import net.brwyatt.badscience.levels.TestLevel;
+import net.brwyatt.badscience.levels.levels.TestLevel;
+import net.brwyatt.badscience.levels.menus.MainMenu;
 import net.brwyatt.brge.Game;
 import net.brwyatt.brge.graphics.ScreenObjects;
 import net.brwyatt.brge.levels.Level;
