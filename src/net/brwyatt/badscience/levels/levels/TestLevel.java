@@ -4,8 +4,10 @@ import java.awt.event.KeyEvent;
 
 import net.brwyatt.badscience.drawables.GridOverlay;
 import net.brwyatt.badscience.drawables.FloorTile;
+import net.brwyatt.brge.BRGE;
 import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
+import net.brwyatt.badscience.levelgrid.LevelGrid;
 import net.brwyatt.brge.graphics.ScreenObjects;
 import net.brwyatt.brge.graphics.drawables.BlackBackground;
 import net.brwyatt.brge.graphics.drawables.MenuItem;
@@ -18,17 +20,24 @@ public class TestLevel extends Level{
 	private boolean pause=false;
 	private Thread t;
 	
+	private LevelGrid levelGrid;
+	
 	private boolean exitselected=false;
 	
 	public TestLevel(Game g, ScreenObjects so){
 		super(g, so);
+		levelGrid=new LevelGrid(BRGE.getWidth(),BRGE.getHeight());
+	}
+	public TestLevel(Game g, ScreenObjects so, LevelGrid lg){
+		super(g, so);
+		levelGrid=lg;
 	}
 
 	public void startLevel() {
 		screenObjects.clear();
 
 		screenObjects.addToBottom(new BlackBackground());
-		screenObjects.addToTop(new GridOverlay());
+		screenObjects.addToTop(new GridOverlay(levelGrid));
 
 		//for(int y=0;y<600;y+=50){
 		//	for(int x=0;x<800;x+=50){
