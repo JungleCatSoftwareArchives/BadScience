@@ -28,6 +28,10 @@ public class TestLevel extends Level{
 		super(g, so);
 		levelGrid=new LevelGrid(BRGE.getWidth(),BRGE.getHeight());
 	}
+	public TestLevel(Game g, ScreenObjects so, LevelGrid lg){
+		super(g, so);
+		levelGrid=lg;
+	}
 
 	public void startLevel() {
 		screenObjects.clear();
