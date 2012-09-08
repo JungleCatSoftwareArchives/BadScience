@@ -2,6 +2,7 @@ package net.brwyatt.badscience;
 
 import java.util.ArrayList;
 
+import net.brwyatt.badscience.levelgrid.LevelGrid;
 import net.brwyatt.badscience.levels.levels.TestLevel;
 import net.brwyatt.badscience.levels.menus.MainMenu;
 import net.brwyatt.brge.BRGE;

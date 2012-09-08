@@ -1,4 +1,4 @@
-package net.brwyatt.badscience;
+package net.brwyatt.badscience.levelgrid;
 
 public class LevelGridPoint {
 	private int x;

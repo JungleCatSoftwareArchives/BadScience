@@ -2,12 +2,12 @@ package net.brwyatt.badscience.levels.levels;
 
 import java.awt.event.KeyEvent;
 
-import net.brwyatt.badscience.LevelGrid;
 import net.brwyatt.badscience.drawables.GridOverlay;
 import net.brwyatt.badscience.drawables.FloorTile;
 import net.brwyatt.brge.BRGE;
 import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
+import net.brwyatt.badscience.levelgrid.LevelGrid;
 import net.brwyatt.brge.graphics.ScreenObjects;
 import net.brwyatt.brge.graphics.drawables.BlackBackground;
 import net.brwyatt.brge.graphics.drawables.MenuItem;

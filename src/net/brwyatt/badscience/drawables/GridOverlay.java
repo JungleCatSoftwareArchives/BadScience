@@ -3,7 +3,7 @@ package net.brwyatt.badscience.drawables;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import net.brwyatt.badscience.LevelGrid;
+import net.brwyatt.badscience.levelgrid.LevelGrid;
 import net.brwyatt.brge.graphics.drawables.Drawable;
 
 public class GridOverlay implements Drawable {
