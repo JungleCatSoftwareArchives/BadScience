@@ -2,8 +2,10 @@ package net.brwyatt.badscience.levels.levels;
 
 import java.awt.event.KeyEvent;
 
+import net.brwyatt.badscience.LevelGrid;
 import net.brwyatt.badscience.drawables.GridOverlay;
 import net.brwyatt.badscience.drawables.FloorTile;
+import net.brwyatt.brge.BRGE;
 import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
 import net.brwyatt.brge.graphics.ScreenObjects;
@@ -18,10 +20,13 @@ public class TestLevel extends Level{
 	private boolean pause=false;
 	private Thread t;
 	
+	private LevelGrid levelGrid;
+	
 	private boolean exitselected=false;
 	
 	public TestLevel(Game g, ScreenObjects so){
 		super(g, so);
+		levelGrid=new LevelGrid(BRGE.getWidth(),BRGE.getHeight());
 	}
 
 	public void startLevel() {
