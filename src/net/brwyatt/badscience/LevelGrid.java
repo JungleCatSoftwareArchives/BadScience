@@ -10,6 +10,7 @@ public class LevelGrid {
 	public LevelGrid(int viewWidth,int viewHeight){
 		this.viewWidth=viewWidth;
 		this.viewHeight=viewHeight;
+		calculateGrid();
 	}
 	public void calculateGrid(){
 		int centerX=viewWidth/2;
