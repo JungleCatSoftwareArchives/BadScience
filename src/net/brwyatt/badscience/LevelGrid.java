@@ -3,7 +3,7 @@ package net.brwyatt.badscience;
 import java.util.ArrayList;
 
 public class LevelGrid {
-	private final int vanishingY=1000;//Constant as changing this would break the horizontal line spacing (for now).
+	private final int vanishingY=-1000;//Constant as changing this would break the horizontal line spacing (for now).
 	private final int squareWidth=100;//Constant for now. This might be something that can be changed if the viewport size changes
 	
 	private int viewWidth;
@@ -19,6 +19,7 @@ public class LevelGrid {
 	public void calculateGrid(){
 		int verticalCount=0;
 		int horizontalCount=0;
+		ArrayList<Integer> yValues=new ArrayList<Integer>();
 		
 		int prevYPos=0;
 		int yPos=0;
@@ -30,6 +31,7 @@ public class LevelGrid {
 			}else{
 				yPos=(int) Math.round((viewHeight-(squareWidth*(48/((Math.sqrt(1872)/d)+3)))));
 			}
+			yValues.add(0,yPos);
 			horizontalCount++;
 			
 			//int leftX = (int)Math.round((yPos-leftB)/leftM);
@@ -39,8 +41,6 @@ public class LevelGrid {
 			//System.out.println("RIGHT: ("+rightX+","+yPos+")");
 		}
 		
-		ArrayList<LevelGridSquare> leftCol=null;
-		ArrayList<LevelGridSquare> rightCol=null;
 		int centerX=viewWidth/2;
 		//Find all grid points
 		//Loop over vertical lines
@@ -48,32 +48,58 @@ public class LevelGrid {
 			double leftM=((vanishingY-viewHeight)/((double)offset));
 			double leftB=(vanishingY-(leftM*centerX));
 			System.out.println("LEFT: y=("+leftM+")*x+("+leftB+")");
-			ArrayList<LevelGridPoint> leftList=new ArrayList<LevelGridPoint>();
 			verticalCount++;
 			
 			double rightM=((vanishingY-viewHeight)/(-((double)offset)));
 			double rightB=(vanishingY-(rightM*centerX));
 			System.out.println("RIGHT: y=("+rightM+")*x+("+rightB+")");
-			ArrayList<LevelGridPoint> rightList=new ArrayList<LevelGridPoint>();
 			verticalCount++;
 			
-			lastLineLeft=leftList;
-			lastLineRight=rightList;
+			if(gridSquares.size()==0){//this is our first loop
+				ArrayList<LevelGridSquare> col=new ArrayList<LevelGridSquare>();
+				for(int i=0;i<yValues.size()-1;i++){
+					int top=yValues.get(i);
+					int bottom=yValues.get(i+1);
+					col.add(new LevelGridSquare(
+							new LevelGridPoint((int)Math.round((top-leftB)/leftM),top),
+							new LevelGridPoint((int)Math.round((top-rightB)/rightM),top),
+							new LevelGridPoint((int)Math.round((bottom-leftB)/leftM),bottom),
+							new LevelGridPoint((int)Math.round((bottom-rightB)/rightM),bottom)
+							));
+				}
+				gridSquares.add(col);
+			}else{//all others
+				ArrayList<LevelGridSquare> leftCol=new ArrayList<LevelGridSquare>();
+				ArrayList<LevelGridSquare> lastLeftCol=gridSquares.get(0);
+				ArrayList<LevelGridSquare> rightCol=new ArrayList<LevelGridSquare>();
+				ArrayList<LevelGridSquare> lastRightCol=gridSquares.get(gridSquares.size()-1);
+				for(int i=0;i<yValues.size()-1;i++){
+					int top=yValues.get(i);
+					int bottom=yValues.get(i+1);
+					LevelGridSquare lastLeftSquare=lastLeftCol.get(i);
+					LevelGridSquare lastRightSquare=lastRightCol.get(i);
+					leftCol.add(new LevelGridSquare(
+							new LevelGridPoint((int)Math.round((top-leftB)/leftM),top),
+							lastLeftSquare.getTopLeft(),
+							new LevelGridPoint((int)Math.round((bottom-leftB)/leftM),bottom),
+							lastLeftSquare.getBottomLeft()
+							));
+					rightCol.add(new LevelGridSquare(
+							lastRightSquare.getTopRight(),
+							new LevelGridPoint((int)Math.round((top-rightB)/rightM),top),
+							lastRightSquare.getBottomRight(),
+							new LevelGridPoint((int)Math.round((bottom-rightB)/rightM),bottom)
+							));
+				}
+				
+				gridSquares.add(0,leftCol);
+				gridSquares.add(rightCol);
+			}
 		}
-		lastLineLeft=null;
-		lastLineRight=null;
 		
 		System.out.println("Vertical lines: "+verticalCount);
 		System.out.println("Horizontal lines: "+horizontalCount);
-	}
-	private ArrayList<LevelGridSquare> buildGridSquaresFromLines(ArrayList<LevelGridPoint> leftLine,ArrayList<LevelGridPoint> rightLine){
-		ArrayList<LevelGridSquare> gridSquares=new ArrayList<LevelGridSquare>();
-		
-		for(int i=0;i<leftLine.size()-1&&i<rightLine.size()-1;i++){
-			gridSquares.add(new LevelGridSquare(leftLine.get(i),rightLine.get(i),leftLine.get(i+1),rightLine.get(i+1)));
-		}
-		
-		return gridSquares;
+		System.out.println("Grid: "+gridSquares.size()+"x"+gridSquares.get(0).size());
 	}
 	public int getViewWidth() {
 		return viewWidth;
@@ -86,5 +112,14 @@ public class LevelGrid {
 	}
 	public void setViewHeight(int viewHeight) {
 		this.viewHeight = viewHeight;
+	}
+	public int getGridWidth(){
+		return gridSquares.size();
+	}
+	public int getGridHeight(){
+		return gridSquares.get(0).size();
+	}
+	public LevelGridSquare getGridSquare(int x, int y){
+		return gridSquares.get(x).get(y);
 	}
 }
