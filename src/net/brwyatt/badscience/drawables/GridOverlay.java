@@ -53,12 +53,12 @@ public class GridOverlay implements Drawable {
 			// y = (offset/(vanishingY-height))*x + (vanishingY-((offset/(vanishingY-height))*vanishingX)
 			double leftM=((vanishingY-height)/((double)offset));
 			double leftB=(vanishingY-(leftM*vanishingX));
-			System.out.println("LEFT: y=("+leftM+")*x+("+leftB+")");
+			//System.out.println("LEFT: y=("+leftM+")*x+("+leftB+")");
 			
 			// y = ((-offset)/(vanishingY-height))*x + (vanishingY-(((-offset)/(vanishingY-height))*vanishingX)
 			double rightM=((vanishingY-height)/(-((double)offset)));
 			double rightB=(vanishingY-(rightM*vanishingX));
-			System.out.println("RIGHT: y=("+rightM+")*x+("+rightB+")");
+			//System.out.println("RIGHT: y=("+rightM+")*x+("+rightB+")");
 			
 
 			yPos=600;
@@ -69,10 +69,10 @@ public class GridOverlay implements Drawable {
 					yPos=(int) Math.round((height-(100*(48/((Math.sqrt(1872)/d)+3)))));
 				}
 				int leftX = (int)Math.round((yPos-leftB)/leftM);
-				System.out.println("LEFT: ("+leftX+","+yPos+")");
+				//System.out.println("LEFT: ("+leftX+","+yPos+")");
 				g.fillRect(leftX-1, yPos-1, 3, 3);
 				int rightX = (int)Math.round((yPos-rightB)/rightM);
-				System.out.println("RIGHT: ("+rightX+","+yPos+")");
+				//System.out.println("RIGHT: ("+rightX+","+yPos+")");
 				g.fillRect(rightX-1, yPos-1, 3, 3);
 			}
 		}
