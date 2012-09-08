@@ -2,7 +2,7 @@ package net.brwyatt.badscience.levelgrid;
 
 import java.awt.Polygon;
 
-public class LevelGridSquare {
+public class LevelGridSquare implements Comparable<LevelGridSquare>{
 	private LevelGridPoint topLeft;
 	private LevelGridPoint topRight;
 	private LevelGridPoint bottomLeft;
@@ -53,5 +53,19 @@ public class LevelGridSquare {
 		p.addPoint(bottomRight.getX(), bottomRight.getY());
 		p.addPoint(bottomLeft.getX(), bottomLeft.getY());
 		return p;
+	}
+
+	@Override
+	public int compareTo(LevelGridSquare other) {
+		int diff=0;
+		diff+=this.topLeft.getX()-other.topLeft.getX();
+		diff+=this.topLeft.getY()-other.topLeft.getY();
+		diff+=this.topRight.getX()-other.topRight.getX();
+		diff+=this.topRight.getY()-other.topRight.getY();
+		diff+=this.bottomLeft.getX()-other.bottomLeft.getX();
+		diff+=this.bottomLeft.getY()-other.bottomLeft.getY();
+		diff+=this.bottomRight.getX()-other.bottomRight.getX();
+		diff+=this.bottomRight.getY()-other.bottomRight.getY();
+		return diff;
 	}
 }
