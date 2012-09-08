@@ -2,6 +2,7 @@ package net.brwyatt.badscience;
 
 public class LevelGrid {
 	private final int vanishingY=1000;//Constant as changing this would break the horizontal line spacing (for now).
+	private final int squareWidth=100;//Constant for now. This might be something that can be changed if the viewport size changes
 	
 	private int viewWidth;
 	private int viewHeight;
@@ -13,34 +14,34 @@ public class LevelGrid {
 	public void calculateGrid(){
 		//Find all intersections
 		System.out.println("*******************");
-		centerX=width/2;
+		int centerX=viewWidth/2;
 		for(int offset=50;offset<=650;offset+=100){
 			//(400,-1000)
 			
 			// y = (offset/(vanishingY-height))*x + (vanishingY-((offset/(vanishingY-height))*vanishingX)
-			double leftM=((vanishingY-height)/((double)offset));
-			double leftB=(vanishingY-(leftM*vanishingX));
+			double leftM=((vanishingY-viewHeight)/((double)offset));
+			double leftB=(vanishingY-(leftM*centerX));
 			System.out.println("LEFT: y=("+leftM+")*x+("+leftB+")");
 			
 			// y = ((-offset)/(vanishingY-height))*x + (vanishingY-(((-offset)/(vanishingY-height))*vanishingX)
-			double rightM=((vanishingY-height)/(-((double)offset)));
-			double rightB=(vanishingY-(rightM*vanishingX));
+			double rightM=((vanishingY-viewHeight)/(-((double)offset)));
+			double rightB=(vanishingY-(rightM*centerX));
 			System.out.println("RIGHT: y=("+rightM+")*x+("+rightB+")");
 			
 
 			int yPos=600;
 			for(int d=-1;yPos>=0;d++){
 				if(d==0){
-					yPos=height;
+					yPos=viewHeight;
 				}else{
-					yPos=(int) Math.round((height-(100*(48/((Math.sqrt(1872)/d)+3)))));
+					yPos=(int) Math.round((viewHeight-(squareWidth*(48/((Math.sqrt(1872)/d)+3)))));
 				}
 				int leftX = (int)Math.round((yPos-leftB)/leftM);
 				System.out.println("LEFT: ("+leftX+","+yPos+")");
-				g.fillRect(leftX-1, yPos-1, 3, 3);
+				//g.fillRect(leftX-1, yPos-1, 3, 3);
 				int rightX = (int)Math.round((yPos-rightB)/rightM);
 				System.out.println("RIGHT: ("+rightX+","+yPos+")");
-				g.fillRect(rightX-1, yPos-1, 3, 3);
+				//g.fillRect(rightX-1, yPos-1, 3, 3);
 			}
 		}
 	}
