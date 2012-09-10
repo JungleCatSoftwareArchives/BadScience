@@ -66,6 +66,10 @@ public class LevelGrid {
 							new LevelGridPoint((int)Math.round((bottom-leftB)/leftM),bottom),
 							new LevelGridPoint((int)Math.round((bottom-rightB)/rightM),bottom)
 							));
+					if(i>0){
+						col.get(i).setBelow(col.get(i+1));
+						col.get(i+1).setAbove(col.get(i));
+					}
 				}
 				gridSquares.add(col);
 			}else{//all others
@@ -78,18 +82,35 @@ public class LevelGrid {
 					int bottom=yValues.get(i+1);
 					LevelGridSquare lastLeftSquare=lastLeftCol.get(i);
 					LevelGridSquare lastRightSquare=lastRightCol.get(i);
-					leftCol.add(new LevelGridSquare(
+					
+					LevelGridSquare newLeftSquare=new LevelGridSquare(
 							new LevelGridPoint((int)Math.round((top-leftB)/leftM),top),
 							lastLeftSquare.getTopLeft(),
 							new LevelGridPoint((int)Math.round((bottom-leftB)/leftM),bottom),
 							lastLeftSquare.getBottomLeft()
-							));
-					rightCol.add(new LevelGridSquare(
+							);
+					LevelGridSquare newRightSquare=new LevelGridSquare(
 							lastRightSquare.getTopRight(),
 							new LevelGridPoint((int)Math.round((top-rightB)/rightM),top),
 							lastRightSquare.getBottomRight(),
 							new LevelGridPoint((int)Math.round((bottom-rightB)/rightM),bottom)
-							));
+							);
+					
+					leftCol.add(newLeftSquare);
+					rightCol.add(newRightSquare);
+					
+					newLeftSquare.setRight(lastLeftSquare);
+					lastLeftSquare.setLeft(newLeftSquare);
+					
+					newRightSquare.setLeft(lastRightSquare);
+					lastRightSquare.setRight(newRightSquare);
+					
+					if(i>0){
+						leftCol.get(i).setBelow(leftCol.get(i+1));
+						leftCol.get(i+1).setAbove(leftCol.get(i));
+						rightCol.get(i).setBelow(rightCol.get(i+1));
+						rightCol.get(i+1).setAbove(rightCol.get(i));
+					}
 				}
 				
 				gridSquares.add(0,leftCol);

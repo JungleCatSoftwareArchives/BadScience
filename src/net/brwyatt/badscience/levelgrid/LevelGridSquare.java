@@ -7,6 +7,11 @@ public class LevelGridSquare implements Comparable<LevelGridSquare>{
 	private LevelGridPoint topRight;
 	private LevelGridPoint bottomLeft;
 	private LevelGridPoint bottomRight;
+
+	private LevelGridSquare above;
+	private LevelGridSquare below;
+	private LevelGridSquare left;
+	private LevelGridSquare right;
 	
 	public LevelGridSquare(LevelGridPoint topLeft,LevelGridPoint topRight,LevelGridPoint bottomLeft,LevelGridPoint bottomRight){
 		this.setTopLeft(topLeft);
@@ -53,6 +58,38 @@ public class LevelGridSquare implements Comparable<LevelGridSquare>{
 		p.addPoint(bottomRight.getX(), bottomRight.getY());
 		p.addPoint(bottomLeft.getX(), bottomLeft.getY());
 		return p;
+	}
+
+	public LevelGridSquare getAbove() {
+		return above;
+	}
+
+	public void setAbove(LevelGridSquare above) {
+		this.above = above;
+	}
+
+	public LevelGridSquare getBelow() {
+		return below;
+	}
+
+	public void setBelow(LevelGridSquare below) {
+		this.below = below;
+	}
+
+	public LevelGridSquare getLeft() {
+		return left;
+	}
+
+	public void setLeft(LevelGridSquare left) {
+		this.left = left;
+	}
+
+	public LevelGridSquare getRight() {
+		return right;
+	}
+
+	public void setRight(LevelGridSquare right) {
+		this.right = right;
 	}
 
 	@Override
