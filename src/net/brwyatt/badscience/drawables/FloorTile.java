@@ -9,25 +9,24 @@ import net.brwyatt.brge.graphics.drawables.Drawable;
 
 public class FloorTile implements Drawable {
 	private LevelGridSquare gridSquare;
-	private LevelGridSquare transitionGridSquare;
-	private LevelGridSquare nextGridSquare;
-	private int stepScale;
 	private Color bgColor;
 	
 	public FloorTile(LevelGridSquare gridSquare){
-		this(gridSquare,50,Color.GRAY);
-	}
-	public FloorTile(LevelGridSquare gridSquare,int stepScale){
-		this(gridSquare,stepScale,Color.GRAY);
+		this(gridSquare,Color.GRAY);
 	}
 	public FloorTile(LevelGridSquare gridSquare,Color color){
-		this(gridSquare,50,color);
+		this(
+				new LevelGridPoint(gridSquare.getTopLeft().getRealX(),gridSquare.getTopLeft().getRealY()),
+				new LevelGridPoint(gridSquare.getTopRight().getRealX(),gridSquare.getTopRight().getRealY()),
+				new LevelGridPoint(gridSquare.getBottomLeft().getRealX(),gridSquare.getBottomLeft().getRealY()),
+				new LevelGridPoint(gridSquare.getBottomRight().getRealX(),gridSquare.getBottomRight().getRealY()),
+				color);
 	}
-	public FloorTile(LevelGridSquare gridSquare,int stepScale,Color color){
-		this.gridSquare=gridSquare;
-		this.transitionGridSquare=null;
-		this.nextGridSquare=null;
-		this.stepScale=stepScale;
+	public FloorTile(LevelGridPoint topLeft,LevelGridPoint topRight,LevelGridPoint bottomLeft,LevelGridPoint bottomRight){
+		this(topLeft, topRight, bottomLeft, bottomRight,Color.GRAY);
+	}
+	public FloorTile(LevelGridPoint topLeft,LevelGridPoint topRight,LevelGridPoint bottomLeft,LevelGridPoint bottomRight,Color color){
+		this.gridSquare=new LevelGridSquare(topLeft,topRight,bottomLeft,bottomRight);
 		this.bgColor=color;
 	}
 	
@@ -35,6 +34,8 @@ public class FloorTile implements Drawable {
 		Color tmp=g.getColor();
 
 		g.setColor(bgColor); //set color
+		g.fillPolygon(gridSquare.getPolygon());
+		/*
 		if(nextGridSquare==null){
 			g.fillPolygon(this.gridSquare.getPolygon());
 		}else{
@@ -65,25 +66,12 @@ public class FloorTile implements Drawable {
 				transitionGridSquare=null;
 			}
 		}
-		
+		*/
 		
 		g.setColor(tmp); //reset color
 	}
 	public void setGridSquare(LevelGridSquare gridSquare){
 		this.gridSquare=gridSquare;
-		this.transitionGridSquare=null;
-		this.nextGridSquare=null;
-	}
-	public void transitionGridSquare(LevelGridSquare gridSquare){
-		if(this.transitionGridSquare!=null){//in case it is already in transition
-			this.gridSquare=transitionGridSquare;
-		}
-		this.transitionGridSquare=new LevelGridSquare(//copy for transition
-				new LevelGridPoint(this.gridSquare.getTopLeft().getRealX(),this.gridSquare.getTopLeft().getRealY()),
-				new LevelGridPoint(this.gridSquare.getTopRight().getRealX(),this.gridSquare.getTopRight().getRealY()),
-				new LevelGridPoint(this.gridSquare.getBottomLeft().getRealX(),this.gridSquare.getBottomLeft().getRealY()),
-				new LevelGridPoint(this.gridSquare.getBottomRight().getRealX(),this.gridSquare.getBottomRight().getRealY()));
-		this.nextGridSquare=gridSquare;
 	}
 	public void setWidth(int w) {
 	}

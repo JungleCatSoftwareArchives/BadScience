@@ -160,6 +160,7 @@ public class TestLevel extends Level{
 				screenObjects.remove(item1);
 			}
 			
+			/*
 			if(counter==1){
 				//tile1
 				if(down){
@@ -208,6 +209,7 @@ public class TestLevel extends Level{
 				}
 				floorTile3.transitionGridSquare(levelGrid.getGridSquare(x3, y3));
 			}
+			*/
 			
 			wait(1);//pause
 			//tick-tock counter incrementing
