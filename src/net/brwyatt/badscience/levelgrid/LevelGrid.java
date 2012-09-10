@@ -33,12 +33,6 @@ public class LevelGrid {
 			}
 			yValues.add(0,yPos);
 			horizontalCount++;
-			
-			//int leftX = (int)Math.round((yPos-leftB)/leftM);
-			//System.out.println("LEFT: ("+leftX+","+yPos+")");
-			
-			//int rightX = (int)Math.round((yPos-rightB)/rightM);
-			//System.out.println("RIGHT: ("+rightX+","+yPos+")");
 		}
 		
 		int centerX=viewWidth/2;
