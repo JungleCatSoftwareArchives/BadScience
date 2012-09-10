@@ -67,8 +67,8 @@ public class LevelGrid {
 							new LevelGridPoint((int)Math.round((bottom-rightB)/rightM),bottom)
 							));
 					if(i>0){
-						col.get(i).setBelow(col.get(i+1));
-						col.get(i+1).setAbove(col.get(i));
+						col.get(i).setAbove(col.get(i-1));
+						col.get(i-1).setBelow(col.get(i));
 					}
 				}
 				gridSquares.add(col);
@@ -106,10 +106,10 @@ public class LevelGrid {
 					lastRightSquare.setRight(newRightSquare);
 					
 					if(i>0){
-						leftCol.get(i).setBelow(leftCol.get(i+1));
-						leftCol.get(i+1).setAbove(leftCol.get(i));
-						rightCol.get(i).setBelow(rightCol.get(i+1));
-						rightCol.get(i+1).setAbove(rightCol.get(i));
+						leftCol.get(i).setAbove(leftCol.get(i-1));
+						leftCol.get(i-1).setBelow(leftCol.get(i));
+						rightCol.get(i).setAbove(rightCol.get(i-1));
+						rightCol.get(i-1).setBelow(rightCol.get(i));
 					}
 				}
 				
