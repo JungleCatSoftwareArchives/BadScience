@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import net.brwyatt.badscience.levelgrid.LevelGrid;
+import net.brwyatt.badscience.levelgrid.LevelGridSquare;
 import net.brwyatt.brge.graphics.drawables.Drawable;
 
 public class GridOverlay implements Drawable {
@@ -32,7 +33,9 @@ public class GridOverlay implements Drawable {
 			}
 		}
 		
-		
+		LevelGridSquare centerSquare=levelGrid.getGridSquare((levelGrid.getGridWidth()-1)/2,(levelGrid.getGridHeight())/2);
+		g.drawLine(centerSquare.getTopLeft().getX(), centerSquare.getTopLeft().getY(), centerSquare.getBottomRight().getX(), centerSquare.getBottomRight().getY());
+		g.drawLine(centerSquare.getTopRight().getX(), centerSquare.getTopRight().getY(), centerSquare.getBottomLeft().getX(), centerSquare.getBottomLeft().getY());
 		
 		//draw center reference box
 		g.setColor(boxColor);
