@@ -3,9 +3,9 @@ package net.brwyatt.badscience.drawables;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import net.brwyatt.badscience.levelgrid.LevelGrid;
-import net.brwyatt.badscience.levelgrid.LevelGridSquare;
 import net.brwyatt.brge.graphics.drawables.Drawable;
+import net.brwyatt.brge.levelgrid.LevelGrid;
+import net.brwyatt.brge.levelgrid.LevelGridSquare;
 
 public class GridOverlay implements Drawable {
 	private int width=800;
