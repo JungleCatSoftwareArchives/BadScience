@@ -2,12 +2,12 @@ package net.brwyatt.badscience;
 
 import java.util.ArrayList;
 
-import net.brwyatt.badscience.levelgrid.LevelGrid;
 import net.brwyatt.badscience.levels.levels.TestLevel;
 import net.brwyatt.badscience.levels.menus.MainMenu;
 import net.brwyatt.brge.BRGE;
 import net.brwyatt.brge.Game;
 import net.brwyatt.brge.graphics.ScreenObjects;
+import net.brwyatt.brge.levelgrid.LevelGrid;
 import net.brwyatt.brge.levels.Level;
 
 
