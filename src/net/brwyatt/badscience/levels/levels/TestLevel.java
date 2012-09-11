@@ -2,6 +2,7 @@ package net.brwyatt.badscience.levels.levels;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Random;
 
 import net.brwyatt.badscience.drawables.GridOverlay;
@@ -53,14 +54,14 @@ public class TestLevel extends Level{
 		screenObjects.addToBottom(new BlackBackground());
 		
 		Random rand=new Random();
-		//for(int y=0;y<levelGrid.getGridHeight();y+=1){
-			//for(int x=0;x<levelGrid.getGridWidth();x+=1){
-				LevelGridSquare square=levelGrid.getGridSquare(7, 5);
+		for(int y=0;y<levelGrid.getGridHeight();y+=1){
+			for(int x=0;x<levelGrid.getGridWidth();x+=1){
+				LevelGridSquare square=levelGrid.getGridSquare(x, y);
 				FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
 				square.getObjects().add(tile);
 				screenObjects.addToTop(tile);
-			//}
-		//}
+			}
+		}
 		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=true;
@@ -230,19 +231,27 @@ public class TestLevel extends Level{
 		if(shiftingLeft){
 			if(gridX!=0){
 				nextLoc=nextLoc.getLeft();
+			}else{
+				this.clearObjects(curLoc.getObjects());
 			}
 		}else if(shiftingRight){
 			if(gridX!=levelGrid.getGridWidth()-1){
 				nextLoc=nextLoc.getRight();
+			}else{
+				this.clearObjects(curLoc.getObjects());
 			}
 		}
 		if(shiftingUp){
 			if(gridY!=0){
 				nextLoc=nextLoc.getAbove();
+			}else{
+				this.clearObjects(curLoc.getObjects());
 			}
 		}else if(shiftingDown){
 			if(gridY!=levelGrid.getGridHeight()-1){
 				nextLoc=nextLoc.getBelow();
+			}else{
+				this.clearObjects(curLoc.getObjects());
 			}
 		}
 		//System.out.println("("+i+", "+j+")");
@@ -282,6 +291,12 @@ public class TestLevel extends Level{
 					realLoc.getBottomLeft().getRealX()+","+realLoc.getBottomLeft().getRealY()+"), ("+
 					realLoc.getBottomRight().getRealX()+","+realLoc.getBottomRight().getRealY()+") )");
 		}
+	}
+	private void clearObjects(ArrayList<LevelGridDrawable> objects){
+		for(LevelGridDrawable d : objects){
+			screenObjects.remove(d);
+		}
+		objects.clear();
 	}
 	@SuppressWarnings("static-access")
 	public static void wait(int millis){
