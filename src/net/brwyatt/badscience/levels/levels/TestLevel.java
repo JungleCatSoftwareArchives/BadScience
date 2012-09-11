@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.brwyatt.badscience.drawables.GridOverlay;
 import net.brwyatt.badscience.drawables.FloorTile;
+import net.brwyatt.badscience.drawables.WallTile;
 import net.brwyatt.brge.BRGE;
 import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
@@ -56,12 +57,19 @@ public class TestLevel extends Level{
 		Random rand=new Random();
 		for(int y=0;y<levelGrid.getGridHeight();y+=1){
 			for(int x=0;x<levelGrid.getGridWidth();x+=1){
+				if(x==levelGrid.getGridWidth()/2 && y==levelGrid.getGridHeight()/2){
+					continue;
+				}
 				LevelGridSquare square=levelGrid.getGridSquare(x, y);
 				FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
 				square.getObjects().add(tile);
 				screenObjects.addToTop(tile);
 			}
 		}
+		
+		WallTile wall=new WallTile(levelGrid.getGridSquare(levelGrid.getGridWidth()/2, levelGrid.getGridHeight()/2),new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+		levelGrid.getGridSquare(levelGrid.getGridWidth()/2, levelGrid.getGridHeight()/2).getObjects().add(wall);
+		screenObjects.addToTop(wall);
 		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=true;
