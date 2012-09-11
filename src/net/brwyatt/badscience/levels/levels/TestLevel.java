@@ -188,19 +188,21 @@ public class TestLevel extends Level{
 				}
 			}
 			
-			//Only update 100 times/second, and only when actually moving
-			int stepRegulator=10;
-			int stepCount=(1000/stepRegulator)-1;
+			//Only update 50 times/second, and only when actually moving
+			int stepRegulator=20;
+			int stepCount=(1000/stepRegulator);
 			if((counter%stepRegulator==0)&&(shiftingLeft||shiftingRight||shiftingUp||shiftingDown)){
 				if(shiftingRight||(shiftingDown&&(!shiftingLeft))){//use up then left navigation
 					for(int i=levelGrid.getGridWidth()-1;i>=0;i--){
 						for(int j=levelGrid.getGridHeight()-1;j>=0;j--){
+							System.out.println("U-L: ("+i+","+j+")");
 							shift(counter,stepCount,i,j);
 						}
 					}
 				}else{//Use down then right navigation
 					for(int i=0;i<levelGrid.getGridWidth();i++){
 						for(int j=0;j<levelGrid.getGridHeight();j++){
+							System.out.println("D-R: ("+i+","+j+")");
 							shift(counter,stepCount,i,j);
 						}
 					}
@@ -208,6 +210,47 @@ public class TestLevel extends Level{
 			}
 			
 			if(counter==1000){//reset shifting
+				
+				if(shiftingLeft||shiftingRight){
+					Random rand=new Random();
+					LevelGridSquare square;
+					if(shiftingLeft){
+						square = levelGrid.getGridSquare(levelGrid.getGridWidth()-1,0);
+					}else{
+						square = levelGrid.getGridSquare(0,0);
+					}
+					FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+					square.getObjects().add(tile);
+					screenObjects.addToTop(tile);
+					for(int i=1;i<levelGrid.getGridHeight()-1;i++){
+						square=square.getBelow();
+						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+						square.getObjects().add(tile);
+						screenObjects.addToTop(tile);
+					}
+					screenObjects.remove(overlay);
+					screenObjects.addToTop(overlay);
+				}
+				if(shiftingUp||shiftingDown){
+					Random rand=new Random();
+					LevelGridSquare square;
+					if(shiftingUp){
+						square = levelGrid.getGridSquare(0,levelGrid.getGridHeight()-1);
+					}else{
+						square = levelGrid.getGridSquare(0,0);
+					}
+					FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+					square.getObjects().add(tile);
+					screenObjects.addToTop(tile);
+					for(int i=1;i<levelGrid.getGridWidth()-1;i++){
+						square=square.getRight();
+						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+						square.getObjects().add(tile);
+						screenObjects.addToTop(tile);
+					}
+					screenObjects.remove(overlay);
+					screenObjects.addToTop(overlay);
+				}
 				shiftingLeft=false;
 				shiftingRight=false;
 				shiftingUp=false;
@@ -285,11 +328,11 @@ public class TestLevel extends Level{
 				realLoc.getBottomRight().setX(realLoc.getBottomRight().getRealX()+bottomRightDistX);
 				realLoc.getBottomRight().setY(realLoc.getBottomRight().getRealY()+bottomRightDistY);
 			}
-			System.out.println(counter+": ( ("+
-					realLoc.getTopLeft().getRealX()+","+realLoc.getTopLeft().getRealY()+"), ("+
-					realLoc.getTopRight().getRealX()+","+realLoc.getTopRight().getRealY()+"), ("+
-					realLoc.getBottomLeft().getRealX()+","+realLoc.getBottomLeft().getRealY()+"), ("+
-					realLoc.getBottomRight().getRealX()+","+realLoc.getBottomRight().getRealY()+") )");
+			//System.out.println(counter+": ( ("+
+			//		realLoc.getTopLeft().getRealX()+","+realLoc.getTopLeft().getRealY()+"), ("+
+			//		realLoc.getTopRight().getRealX()+","+realLoc.getTopRight().getRealY()+"), ("+
+			//		realLoc.getBottomLeft().getRealX()+","+realLoc.getBottomLeft().getRealY()+"), ("+
+			//		realLoc.getBottomRight().getRealX()+","+realLoc.getBottomRight().getRealY()+") )");
 		}
 	}
 	private void clearObjects(ArrayList<LevelGridDrawable> objects){
