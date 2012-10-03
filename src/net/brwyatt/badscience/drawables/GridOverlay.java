@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with BadScience!.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
- package net.brwyatt.badscience.drawables;
+
+package net.brwyatt.badscience.drawables;
 
 import java.awt.Color;
 import java.awt.Graphics;
