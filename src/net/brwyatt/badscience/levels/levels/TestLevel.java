@@ -248,10 +248,20 @@ public class TestLevel extends Level{
 					}else{
 						square = levelGrid.getGridSquare(0,0);
 					}
-					FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-					square.getObjects().add(tile);
-					screenObjects.addToTop(tile);
-					for(int i=1;i<levelGrid.getGridHeight();i++){
+					FloorTile tile;
+					int max=levelGrid.getGridHeight();
+					int i=1;
+					if(shiftingUp){
+						//if we are also moving up, skip the corners, the other loop will add them!
+						max--;
+					}
+					if(!shiftingDown){
+						//if we are shifting down, we don't want to add the corners, the other loop will do that!
+						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+						square.getObjects().add(tile);
+						screenObjects.addToTop(tile);
+					}
+					for(;i<max;i++){
 						//System.out.println("LEFT/RIGHT: ("+x+","+i+")");
 						square=square.getBelow();
 						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
@@ -277,10 +287,8 @@ public class TestLevel extends Level{
 					square.getObjects().add(tile);
 					screenObjects.addToTop(tile);
 					int max=levelGrid.getGridWidth();
-					if(shiftingLeft||shiftingRight){
-						max--;
-					}
-					for(int i=1;i<max;i++){
+					int i=1;
+					for(;i<max;i++){
 						//System.out.println("UP/DOWN: ("+i+","+y+")");
 						square=square.getRight();
 						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
