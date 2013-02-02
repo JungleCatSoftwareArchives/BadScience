@@ -69,6 +69,7 @@ public class TestLevel extends Level{
 
 	public void startLevel() {
 		screenObjects.clear();
+		levelGrid.resetGrid();
 
 		screenObjects.addToBottom(new BlackBackground());
 		
@@ -96,6 +97,7 @@ public class TestLevel extends Level{
 			wait(1);
 		}
 		screenObjects.clear();
+		levelGrid.resetGrid();
 	}
 	public void keyPressed(int key) {
 		switch(key){
