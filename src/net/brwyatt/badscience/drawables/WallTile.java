@@ -33,6 +33,11 @@ public class WallTile implements LevelGridDrawable {
 	private LevelGridSquare levelGridSquare;
 	private Color bgColor;
 	
+	private boolean renderLeft;
+	private boolean renderRight;
+	private boolean renderFront;
+	private boolean renderTop;
+	
 	public WallTile(LevelGridSquare gridSquare){
 		this(gridSquare,Color.GRAY);
 	}
@@ -50,6 +55,10 @@ public class WallTile implements LevelGridDrawable {
 	public WallTile(LevelGridPoint topLeft,LevelGridPoint topRight,LevelGridPoint bottomLeft,LevelGridPoint bottomRight,Color color){
 		this.levelGridSquare=new LevelGridSquare(topLeft,topRight,bottomLeft,bottomRight);
 		this.bgColor=color;
+		this.renderLeft=true;
+		this.renderRight=true;
+		this.renderFront=true;
+		this.renderTop=true;
 	}
 	
 	public void draw(Graphics g) {
@@ -80,28 +89,32 @@ public class WallTile implements LevelGridDrawable {
 		topBackRight.setX(topBackRight.getX()+((topBackRight.getX()-(BRGE.getWidth()/2))*xScale));
 		topBackRight.setY(topBackRight.getY()-(bottomBackDistance*yScale));
 		
-		//draw front
-		g.setColor(bgColor);
-		LevelGridSquare front=new LevelGridSquare(topFrontLeft,topFrontRight,bottomFrontLeft,bottomFrontRight);
-		g.fillPolygon(front.getPolygon());
-		g.setColor(Color.BLACK);
-		g.drawPolygon(front.getPolygon());
+		if(renderFront){
+			//draw front
+			g.setColor(bgColor);
+			LevelGridSquare front=new LevelGridSquare(topFrontLeft,topFrontRight,bottomFrontLeft,bottomFrontRight);
+			g.fillPolygon(front.getPolygon());
+			g.setColor(Color.BLACK);
+			g.drawPolygon(front.getPolygon());
+		}
 		
-		//draw top
-		g.setColor(bgColor);
-		LevelGridSquare top=new LevelGridSquare(topBackLeft,topBackRight,topFrontLeft,topFrontRight);
-		g.fillPolygon(top.getPolygon());
-		g.setColor(Color.BLACK);
-		g.drawPolygon(top.getPolygon());
+		if(renderTop){
+			//draw top
+			g.setColor(bgColor);
+			LevelGridSquare top=new LevelGridSquare(topBackLeft,topBackRight,topFrontLeft,topFrontRight);
+			g.fillPolygon(top.getPolygon());
+			g.setColor(Color.BLACK);
+			g.drawPolygon(top.getPolygon());
+		}
 		
-		if(levelGridSquare.getBottomRight().getX()<BRGE.getWidth()/2){
+		if(renderRight && (levelGridSquare.getBottomRight().getX()<BRGE.getWidth()/2)){
 			//draw right
 			g.setColor(bgColor);
 			LevelGridSquare right=new LevelGridSquare(topFrontRight,topBackRight,bottomFrontRight,bottomBackRight);
 			g.fillPolygon(right.getPolygon());
 			g.setColor(Color.BLACK);
 			g.drawPolygon(right.getPolygon());
-		}else if((levelGridSquare.getBottomLeft().getX()>BRGE.getWidth()/2)){
+		}else if(renderLeft && (levelGridSquare.getBottomLeft().getX()>BRGE.getWidth()/2)){
 			//draw left
 			g.setColor(bgColor);
 			LevelGridSquare left=new LevelGridSquare(topBackLeft,topFrontLeft,bottomBackLeft,bottomFrontLeft);
@@ -137,5 +150,17 @@ public class WallTile implements LevelGridDrawable {
 	}
 	public LevelGridSquare getGridSquare() {
 		return this.levelGridSquare;
+	}
+	public void setRenderLeft(boolean render){
+		renderLeft=render;
+	}
+	public void setRenderRight(boolean render){
+		renderRight=render;
+	}
+	public void setRenderFront(boolean render){
+		renderFront=render;
+	}
+	public void setRenderTop(boolean render){
+		renderTop=render;
 	}
 }
