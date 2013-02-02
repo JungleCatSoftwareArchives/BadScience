@@ -88,8 +88,8 @@ public class TestLevel extends Level{
 		}
 		
 		overlay=new GridOverlay(levelGrid);
-		showOverlay=true;
-		screenObjects.addToTop(overlay);
+		showOverlay=false;
+		//screenObjects.addToTop(overlay);
 
 		t=new Thread(){ public void run(){ runGame(); }};
 		t.start();
