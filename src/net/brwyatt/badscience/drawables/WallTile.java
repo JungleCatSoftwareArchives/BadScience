@@ -86,6 +86,13 @@ public class WallTile implements LevelGridDrawable {
 		g.setColor(Color.BLACK);
 		g.drawPolygon(front.getPolygon());
 		
+		//draw top
+		g.setColor(bgColor);
+		LevelGridSquare top=new LevelGridSquare(topBackLeft,topBackRight,topFrontLeft,topFrontRight);
+		g.fillPolygon(top.getPolygon());
+		g.setColor(Color.BLACK);
+		g.drawPolygon(top.getPolygon());
+		
 		LevelGridSquare side=null;
 		if(levelGridSquare.getBottomRight().getX()<BRGE.getWidth()/2){
 			//draw right
