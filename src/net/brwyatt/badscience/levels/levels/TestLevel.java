@@ -393,7 +393,33 @@ public class TestLevel extends Level{
 		if(rand.nextInt(4)==0){
 			tile=new WallTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
 			topWallTile+=1;
-			screenObjects.addAtIndex(topWallTile,tile);
+			
+			int pos=topWallTile;
+			//See if there is a wall segment below to the left that we must render before
+			try{
+				for(LevelGridDrawable d : square.getLeft().getBelow().getObjects()){
+					if(d instanceof WallTile){
+						int i=screenObjects.lastIndexOf(d);
+						if(i<pos){
+							pos=i;
+						}
+					}
+				}
+			}catch(Exception e){
+			}
+			//See if there is a wall segment below to the right that we must render before
+			try{
+				for(LevelGridDrawable d : square.getRight().getBelow().getObjects()){
+					if(d instanceof WallTile){
+						int i=screenObjects.lastIndexOf(d);
+						if(i<pos){
+							pos=i;
+						}
+					}
+				}
+			}catch(Exception e){
+			}
+			screenObjects.addAtIndex(pos,tile);
 		}else{
 			tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
 			topFloorTile+=1;
