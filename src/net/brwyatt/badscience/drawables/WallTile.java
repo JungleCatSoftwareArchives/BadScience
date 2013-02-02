@@ -32,7 +32,6 @@ import net.brwyatt.brge.levelgrid.LevelGridSquare;
 public class WallTile implements LevelGridDrawable {
 	private LevelGridSquare levelGridSquare;
 	private Color bgColor;
-	private LevelGridSquare realGridSquare;
 	
 	public WallTile(LevelGridSquare gridSquare){
 		this(gridSquare,Color.GRAY);
@@ -44,7 +43,6 @@ public class WallTile implements LevelGridDrawable {
 				new LevelGridPoint(gridSquare.getBottomLeft().getRealX(),gridSquare.getBottomLeft().getRealY()),
 				new LevelGridPoint(gridSquare.getBottomRight().getRealX(),gridSquare.getBottomRight().getRealY()),
 				color);
-		realGridSquare=gridSquare;
 	}
 	public WallTile(LevelGridPoint topLeft,LevelGridPoint topRight,LevelGridPoint bottomLeft,LevelGridPoint bottomRight){
 		this(topLeft, topRight, bottomLeft, bottomRight,Color.GRAY);
@@ -103,7 +101,7 @@ public class WallTile implements LevelGridDrawable {
 			g.fillPolygon(right.getPolygon());
 			g.setColor(Color.BLACK);
 			g.drawPolygon(right.getPolygon());
-		}else if((levelGridSquare.getBottomLeft().getX()>BRGE.getWidth()/2) && !hasLeftWallNeighbor()){
+		}else if((levelGridSquare.getBottomLeft().getX()>BRGE.getWidth()/2)){
 			//draw left
 			g.setColor(bgColor);
 			LevelGridSquare left=new LevelGridSquare(topBackLeft,topFrontLeft,bottomBackLeft,bottomFrontLeft);
@@ -139,17 +137,5 @@ public class WallTile implements LevelGridDrawable {
 	}
 	public LevelGridSquare getGridSquare() {
 		return this.levelGridSquare;
-	}
-	private boolean hasLeftWallNeighbor(){
-		LevelGridSquare left = realGridSquare.getLeft();
-		if(left!=null){
-			ArrayList<LevelGridDrawable> leftObjects = left.getObjects();
-			for(int i=0;i<leftObjects.size();i++){
-				if(leftObjects.get(i) instanceof WallTile){
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 }
