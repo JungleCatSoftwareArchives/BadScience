@@ -87,6 +87,9 @@ public class TestLevel extends Level{
 			for(int x=0;x<levelGrid.getGridWidth();x+=1){
 				if(rand.nextInt(4)==0){
 					LevelGridSquare square=levelGrid.getGridSquare(x, y);
+					for(LevelGridDrawable d : square.getObjects()){
+						screenObjects.remove(d);
+					}
 					square.getObjects().clear();
 					WallTile tile=new WallTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
 					square.getObjects().add(tile);
