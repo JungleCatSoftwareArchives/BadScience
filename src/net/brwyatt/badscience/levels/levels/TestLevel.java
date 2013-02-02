@@ -26,6 +26,7 @@ import java.util.Random;
 
 import net.brwyatt.badscience.drawables.GridOverlay;
 import net.brwyatt.badscience.drawables.FloorTile;
+import net.brwyatt.badscience.drawables.WallTile;
 import net.brwyatt.brge.BRGE;
 import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
@@ -54,6 +55,9 @@ public class TestLevel extends Level{
 	private boolean shiftingUp;
 	private boolean shiftingDown;
 	
+	private int topFloorTile;
+	private int topWallTile;
+	
 	private LevelGrid levelGrid;
 	
 	private boolean exitselected=false;
@@ -73,19 +77,19 @@ public class TestLevel extends Level{
 
 		screenObjects.addToBottom(new BlackBackground());
 		
-		Random rand=new Random();
+		//initialize index for objects
+		topFloorTile=topWallTile=screenObjects.count()-1;
+		
 		for(int y=0;y<levelGrid.getGridHeight();y+=1){
 			for(int x=0;x<levelGrid.getGridWidth();x+=1){
 				LevelGridSquare square=levelGrid.getGridSquare(x, y);
-				FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-				square.getObjects().add(tile);
-				screenObjects.addToTop(tile);
+				loadTile(square);
 			}
 		}
 		
 		overlay=new GridOverlay(levelGrid);
-		showOverlay=true;
-		screenObjects.addToTop(overlay);
+		showOverlay=false;
+		//screenObjects.addToTop(overlay);
 
 		t=new Thread(){ public void run(){ runGame(); }};
 		t.start();
@@ -238,7 +242,6 @@ public class TestLevel extends Level{
 			if(counter==1000){//reset shifting
 				
 				if(shiftingLeft||shiftingRight){
-					Random rand=new Random();
 					LevelGridSquare square;
 					int x=0;
 					if(shiftingLeft){
@@ -247,7 +250,6 @@ public class TestLevel extends Level{
 					}else{
 						square = levelGrid.getGridSquare(0,0);
 					}
-					FloorTile tile;
 					int max=levelGrid.getGridHeight();
 					int i=1;
 					if(shiftingUp){
@@ -256,16 +258,12 @@ public class TestLevel extends Level{
 					}
 					if(!shiftingDown){
 						//if we are shifting down, we don't want to add the corners, the other loop will do that!
-						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-						square.getObjects().add(tile);
-						screenObjects.addToTop(tile);
+						loadTile(square);
 					}
 					for(;i<max;i++){
 						//System.out.println("LEFT/RIGHT: ("+x+","+i+")");
 						square=square.getBelow();
-						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-						square.getObjects().add(tile);
-						screenObjects.addToTop(tile);
+						loadTile(square);
 					}
 					if(showOverlay){
 						screenObjects.remove(overlay);
@@ -273,7 +271,6 @@ public class TestLevel extends Level{
 					}
 				}
 				if(shiftingUp||shiftingDown){
-					Random rand=new Random();
 					LevelGridSquare square;
 					int y=0;
 					if(shiftingUp){
@@ -282,17 +279,13 @@ public class TestLevel extends Level{
 					}else{
 						square = levelGrid.getGridSquare(0,0);
 					}
-					FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-					square.getObjects().add(tile);
-					screenObjects.addToTop(tile);
+					loadTile(square);
 					int max=levelGrid.getGridWidth();
 					int i=1;
 					for(;i<max;i++){
 						//System.out.println("UP/DOWN: ("+i+","+y+")");
 						square=square.getRight();
-						tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-						square.getObjects().add(tile);
-						screenObjects.addToTop(tile);
+						loadTile(square);
 					}
 					if(showOverlay){
 						screenObjects.remove(overlay);
@@ -314,7 +307,6 @@ public class TestLevel extends Level{
 			}
 		}
 	}
-
 	private void shift(int counter,int numSteps,int gridX,int gridY){
 		LevelGridSquare curLoc=levelGrid.getGridSquare(gridX, gridY);
 		LevelGridSquare nextLoc=curLoc;
@@ -323,26 +315,26 @@ public class TestLevel extends Level{
 			if(gridX!=0){
 				nextLoc=nextLoc.getLeft();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}else if(shiftingRight){
 			if(gridX!=levelGrid.getGridWidth()-1){
 				nextLoc=nextLoc.getRight();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}
 		if(shiftingUp){
 			if(gridY!=0){
 				nextLoc=nextLoc.getAbove();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}else if(shiftingDown){
 			if(gridY!=levelGrid.getGridHeight()-1){
 				nextLoc=nextLoc.getBelow();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}
 		//System.out.println("("+i+", "+j+")");
@@ -383,11 +375,134 @@ public class TestLevel extends Level{
 			//		realLoc.getBottomRight().getRealX()+","+realLoc.getBottomRight().getRealY()+") )");
 		}
 	}
-	private void clearObjects(ArrayList<LevelGridDrawable> objects){
+	private void clearObjects(LevelGridSquare square){
+		//clear the objects
+		ArrayList<LevelGridDrawable> objects = square.getObjects();
 		for(LevelGridDrawable d : objects){
+			if(d instanceof WallTile){
+				topWallTile-=1;
+				//check above to see if we need to inform walls to render their front
+				try{
+					LevelGridSquare above=square.getAbove();
+					for(LevelGridDrawable d2 : above.getObjects()){
+						if(d2 instanceof WallTile){
+							((WallTile)d2).setRenderFront(true);
+						}
+					}
+				}catch(Exception e){
+				}
+				//check left to see if we need to inform walls to render their right
+				try{
+					LevelGridSquare left=square.getLeft();
+					for(LevelGridDrawable d2 : left.getObjects()){
+						if(d2 instanceof WallTile){
+							((WallTile)d2).setRenderRight(true);
+						}
+					}
+				}catch(Exception e){
+				}
+				//check right to see if we need to inform walls to render their left
+				try{
+					LevelGridSquare right=square.getRight();
+					for(LevelGridDrawable d2 : right.getObjects()){
+						if(d2 instanceof WallTile){
+							((WallTile)d2).setRenderLeft(true);
+						}
+					}
+				}catch(Exception e){
+				}
+			}else{
+				topFloorTile-=1;
+				topWallTile-=1;
+			}
 			screenObjects.remove(d);
 		}
 		objects.clear();
+	}
+	private void loadTile(LevelGridSquare square){
+		Random rand=new Random();
+		LevelGridDrawable tile;
+		if(rand.nextInt(4)==0){
+			tile=new WallTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+			topWallTile+=1;
+			
+			int pos=topWallTile;
+			
+			//check below to see if we need to render the front
+			try{
+				LevelGridSquare below=square.getBelow();
+				//Also See if there is a wall segment below to the left that we must render before
+				try{
+					for(LevelGridDrawable d : below.getLeft().getObjects()){
+						if(d instanceof WallTile){
+							int i=screenObjects.lastIndexOf(d);
+							if(i<pos){
+								pos=i;
+							}
+						}
+					}
+				}catch(Exception e){
+				}
+				//Also See if there is a wall segment below to the right that we must render before
+				try{
+					for(LevelGridDrawable d : below.getRight().getObjects()){
+						if(d instanceof WallTile){
+							int i=screenObjects.lastIndexOf(d);
+							if(i<pos){
+								pos=i;
+							}
+						}
+					}
+				}catch(Exception e){
+				}
+				for(LevelGridDrawable d : below.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)tile).setRenderFront(false);
+						break;
+					}
+				}
+			}catch(Exception e){
+			}
+			//check above to see if we need to inform walls to not render their front
+			try{
+				LevelGridSquare above=square.getAbove();
+				for(LevelGridDrawable d : above.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)d).setRenderFront(false);
+					}
+				}
+			}catch(Exception e){
+			}
+			//check left to see if we need to render the left and inform walls to not render their right
+			try{
+				LevelGridSquare left=square.getLeft();
+				for(LevelGridDrawable d : left.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)d).setRenderRight(false);
+						((WallTile)tile).setRenderLeft(false);
+					}
+				}
+			}catch(Exception e){
+			}
+			//check right to see if we need to render the right and inform walls to not render their left
+			try{
+				LevelGridSquare right=square.getRight();
+				for(LevelGridDrawable d : right.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)d).setRenderLeft(false);
+						((WallTile)tile).setRenderRight(false);
+					}
+				}
+			}catch(Exception e){
+			}
+			screenObjects.addAtIndex(pos,tile);
+		}else{
+			tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+			topFloorTile+=1;
+			topWallTile+=1;
+			screenObjects.addAtIndex(topFloorTile,tile);
+		}
+		square.getObjects().add(tile);
 	}
 	@SuppressWarnings("static-access")
 	public static void wait(int millis){
