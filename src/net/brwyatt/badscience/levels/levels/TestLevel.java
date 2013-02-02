@@ -376,42 +376,41 @@ public class TestLevel extends Level{
 		}
 	}
 	private void clearObjects(LevelGridSquare square){
-		//check above to see if we need to inform walls to render their front
-		try{
-			LevelGridSquare above=square.getAbove();
-			for(LevelGridDrawable d : above.getObjects()){
-				if(d instanceof WallTile){
-					((WallTile)d).setRenderFront(true);
-				}
-			}
-		}catch(Exception e){
-		}
-		//check left to see if we need to inform walls to render their right
-		try{
-			LevelGridSquare left=square.getLeft();
-			for(LevelGridDrawable d : left.getObjects()){
-				if(d instanceof WallTile){
-					((WallTile)d).setRenderRight(true);
-				}
-			}
-		}catch(Exception e){
-		}
-		//check right to see if we need to inform walls to render their left
-		try{
-			LevelGridSquare right=square.getRight();
-			for(LevelGridDrawable d : right.getObjects()){
-				if(d instanceof WallTile){
-					((WallTile)d).setRenderLeft(true);
-				}
-			}
-		}catch(Exception e){
-		}
-		
 		//clear the objects
 		ArrayList<LevelGridDrawable> objects = square.getObjects();
 		for(LevelGridDrawable d : objects){
 			if(d instanceof WallTile){
 				topWallTile-=1;
+				//check above to see if we need to inform walls to render their front
+				try{
+					LevelGridSquare above=square.getAbove();
+					for(LevelGridDrawable d2 : above.getObjects()){
+						if(d2 instanceof WallTile){
+							((WallTile)d2).setRenderFront(true);
+						}
+					}
+				}catch(Exception e){
+				}
+				//check left to see if we need to inform walls to render their right
+				try{
+					LevelGridSquare left=square.getLeft();
+					for(LevelGridDrawable d2 : left.getObjects()){
+						if(d2 instanceof WallTile){
+							((WallTile)d2).setRenderRight(true);
+						}
+					}
+				}catch(Exception e){
+				}
+				//check right to see if we need to inform walls to render their left
+				try{
+					LevelGridSquare right=square.getRight();
+					for(LevelGridDrawable d2 : right.getObjects()){
+						if(d2 instanceof WallTile){
+							((WallTile)d2).setRenderLeft(true);
+						}
+					}
+				}catch(Exception e){
+				}
 			}else{
 				topFloorTile-=1;
 				topWallTile-=1;
