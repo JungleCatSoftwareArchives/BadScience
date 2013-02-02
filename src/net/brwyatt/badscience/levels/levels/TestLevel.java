@@ -315,26 +315,26 @@ public class TestLevel extends Level{
 			if(gridX!=0){
 				nextLoc=nextLoc.getLeft();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}else if(shiftingRight){
 			if(gridX!=levelGrid.getGridWidth()-1){
 				nextLoc=nextLoc.getRight();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}
 		if(shiftingUp){
 			if(gridY!=0){
 				nextLoc=nextLoc.getAbove();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}else if(shiftingDown){
 			if(gridY!=levelGrid.getGridHeight()-1){
 				nextLoc=nextLoc.getBelow();
 			}else{
-				this.clearObjects(curLoc.getObjects());
+				this.clearObjects(curLoc);
 			}
 		}
 		//System.out.println("("+i+", "+j+")");
@@ -375,7 +375,40 @@ public class TestLevel extends Level{
 			//		realLoc.getBottomRight().getRealX()+","+realLoc.getBottomRight().getRealY()+") )");
 		}
 	}
-	private void clearObjects(ArrayList<LevelGridDrawable> objects){
+	private void clearObjects(LevelGridSquare square){
+		//check above to see if we need to inform walls to render their front
+		try{
+			LevelGridSquare above=square.getAbove();
+			for(LevelGridDrawable d : above.getObjects()){
+				if(d instanceof WallTile){
+					((WallTile)d).setRenderFront(true);
+				}
+			}
+		}catch(Exception e){
+		}
+		//check left to see if we need to inform walls to render their right
+		try{
+			LevelGridSquare left=square.getLeft();
+			for(LevelGridDrawable d : left.getObjects()){
+				if(d instanceof WallTile){
+					((WallTile)d).setRenderRight(true);
+				}
+			}
+		}catch(Exception e){
+		}
+		//check right to see if we need to inform walls to render their left
+		try{
+			LevelGridSquare right=square.getRight();
+			for(LevelGridDrawable d : right.getObjects()){
+				if(d instanceof WallTile){
+					((WallTile)d).setRenderLeft(true);
+				}
+			}
+		}catch(Exception e){
+		}
+		
+		//clear the objects
+		ArrayList<LevelGridDrawable> objects = square.getObjects();
 		for(LevelGridDrawable d : objects){
 			if(d instanceof WallTile){
 				topWallTile-=1;
