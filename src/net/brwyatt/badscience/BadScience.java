@@ -32,7 +32,6 @@ import net.brwyatt.brge.levels.Level;
 
 public class BadScience extends Game {
 	private final String title="Bad Science!";
-	private LevelGrid levelGrid;
 	private Level currentLevel=null;
 	private ArrayList<Level> levels;
 	
@@ -40,9 +39,8 @@ public class BadScience extends Game {
 		screenObjects=so;
 		levels=new ArrayList<Level>();
 		
-		levelGrid=new LevelGrid(BRGE.getWidth(),BRGE.getHeight());
 		levels.add(new MainMenu(this, screenObjects));
-		levels.add(new TestLevel(this, screenObjects,levelGrid));
+		levels.add(new TestLevel(this, screenObjects));
 	}
 	
 	public void startGame() {
