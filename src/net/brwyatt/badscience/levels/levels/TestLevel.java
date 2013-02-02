@@ -77,19 +77,23 @@ public class TestLevel extends Level{
 		Random rand=new Random();
 		for(int y=0;y<levelGrid.getGridHeight();y+=1){
 			for(int x=0;x<levelGrid.getGridWidth();x+=1){
-				if(x==levelGrid.getGridWidth()/2 && y==levelGrid.getGridHeight()/2){
-					continue;
-				}
 				LevelGridSquare square=levelGrid.getGridSquare(x, y);
 				FloorTile tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
 				square.getObjects().add(tile);
 				screenObjects.addToTop(tile);
 			}
 		}
-		
-		WallTile wall=new WallTile(levelGrid.getGridSquare(levelGrid.getGridWidth()/2, levelGrid.getGridHeight()/2),new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-		levelGrid.getGridSquare(levelGrid.getGridWidth()/2, levelGrid.getGridHeight()/2).getObjects().add(wall);
-		screenObjects.addToTop(wall);
+		for(int y=0;y<levelGrid.getGridHeight();y+=1){
+			for(int x=0;x<levelGrid.getGridWidth();x+=1){
+				if(rand.nextInt(4)==0){
+					LevelGridSquare square=levelGrid.getGridSquare(x, y);
+					square.getObjects().clear();
+					WallTile tile=new WallTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+					square.getObjects().add(tile);
+					screenObjects.addToTop(tile);
+				}
+			}
+		}
 		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=true;
