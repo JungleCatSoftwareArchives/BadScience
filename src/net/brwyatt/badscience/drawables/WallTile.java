@@ -62,6 +62,8 @@ public class WallTile implements LevelGridDrawable {
 		//get bottom grid vertices
 		LevelGridPoint bottomFrontLeft=levelGridSquare.getBottomLeft().copy();
 		LevelGridPoint bottomFrontRight=levelGridSquare.getBottomRight().copy();
+		LevelGridPoint bottomBackLeft=levelGridSquare.getTopLeft().copy();
+		LevelGridPoint bottomBackRight=levelGridSquare.getTopRight().copy();
 		
 		//find top vertices
 		int bottomFrontDistance=bottomFrontRight.getX()-bottomFrontLeft.getX();
@@ -71,6 +73,13 @@ public class WallTile implements LevelGridDrawable {
 		LevelGridPoint topFrontRight=bottomFrontRight.copy();
 		topFrontRight.setX(topFrontRight.getX()+((topFrontRight.getX()-(BRGE.getWidth()/2))*xScale));
 		topFrontRight.setY(topFrontRight.getY()-(bottomFrontDistance*yScale));
+		int bottomBackDistance=bottomBackRight.getX()-bottomBackLeft.getX();
+		LevelGridPoint topBackLeft=bottomBackLeft.copy();
+		topBackLeft.setX(topBackLeft.getX()+((topBackLeft.getX()-(BRGE.getWidth()/2))*xScale));
+		topBackLeft.setY(topBackLeft.getY()-(bottomBackDistance*yScale));
+		LevelGridPoint topBackRight=bottomBackRight.copy();
+		topBackRight.setX(topBackRight.getX()+((topBackRight.getX()-(BRGE.getWidth()/2))*xScale));
+		topBackRight.setY(topBackRight.getY()-(bottomBackDistance*yScale));
 		
 		//draw front
 		LevelGridSquare front=new LevelGridSquare(topFrontLeft,topFrontRight,bottomFrontLeft,bottomFrontRight);
