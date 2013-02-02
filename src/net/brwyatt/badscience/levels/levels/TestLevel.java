@@ -395,26 +395,70 @@ public class TestLevel extends Level{
 			topWallTile+=1;
 			
 			int pos=topWallTile;
-			//See if there is a wall segment below to the left that we must render before
+			
+			//check below to see if we need to render the front
 			try{
-				for(LevelGridDrawable d : square.getLeft().getBelow().getObjects()){
-					if(d instanceof WallTile){
-						int i=screenObjects.lastIndexOf(d);
-						if(i<pos){
-							pos=i;
+				LevelGridSquare below=square.getBelow();
+				//Also See if there is a wall segment below to the left that we must render before
+				try{
+					for(LevelGridDrawable d : below.getLeft().getObjects()){
+						if(d instanceof WallTile){
+							int i=screenObjects.lastIndexOf(d);
+							if(i<pos){
+								pos=i;
+							}
 						}
+					}
+				}catch(Exception e){
+				}
+				//Also See if there is a wall segment below to the right that we must render before
+				try{
+					for(LevelGridDrawable d : below.getRight().getObjects()){
+						if(d instanceof WallTile){
+							int i=screenObjects.lastIndexOf(d);
+							if(i<pos){
+								pos=i;
+							}
+						}
+					}
+				}catch(Exception e){
+				}
+				for(LevelGridDrawable d : below.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)tile).setRenderFront(false);
+						break;
 					}
 				}
 			}catch(Exception e){
 			}
-			//See if there is a wall segment below to the right that we must render before
+			//check above to see if we need to inform walls to not render their front
 			try{
-				for(LevelGridDrawable d : square.getRight().getBelow().getObjects()){
+				LevelGridSquare above=square.getAbove();
+				for(LevelGridDrawable d : above.getObjects()){
 					if(d instanceof WallTile){
-						int i=screenObjects.lastIndexOf(d);
-						if(i<pos){
-							pos=i;
-						}
+						((WallTile)d).setRenderFront(false);
+					}
+				}
+			}catch(Exception e){
+			}
+			//check left to see if we need to render the left and inform walls to not render their right
+			try{
+				LevelGridSquare left=square.getLeft();
+				for(LevelGridDrawable d : left.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)d).setRenderRight(false);
+						((WallTile)tile).setRenderLeft(false);
+					}
+				}
+			}catch(Exception e){
+			}
+			//check right to see if we need to render the right and inform walls to not render their left
+			try{
+				LevelGridSquare right=square.getRight();
+				for(LevelGridDrawable d : right.getObjects()){
+					if(d instanceof WallTile){
+						((WallTile)d).setRenderLeft(false);
+						((WallTile)tile).setRenderRight(false);
 					}
 				}
 			}catch(Exception e){
