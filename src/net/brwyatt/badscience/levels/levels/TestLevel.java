@@ -98,6 +98,11 @@ public class TestLevel extends Level{
 		}
 		screenObjects.clear();
 		levelGrid.resetGrid();
+		
+		shiftingLeft=false;
+		shiftingRight=false;
+		shiftingUp=false;
+		shiftingDown=false;
 	}
 	public void keyPressed(int key) {
 		switch(key){
