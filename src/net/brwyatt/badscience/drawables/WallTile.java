@@ -53,15 +53,17 @@ public class WallTile implements LevelGridDrawable {
 	
 	public void draw(Graphics g) {
 		Color tmp=g.getColor();
-
+		
+		double yScale=2.0/3.0;
+		
 		g.setColor(bgColor); //set color
 		LevelGridPoint bottomFrontLeft=levelGridSquare.getBottomLeft().copy();
 		LevelGridPoint bottomFrontRight=levelGridSquare.getBottomRight().copy();
 		int distance=bottomFrontRight.getX()-bottomFrontLeft.getX();
 		LevelGridPoint topFrontLeft=bottomFrontLeft.copy();
-		topFrontLeft.setY(topFrontLeft.getY()-distance);
+		topFrontLeft.setY(topFrontLeft.getY()-(distance*yScale));
 		LevelGridPoint topFrontRight=bottomFrontRight.copy();
-		topFrontRight.setY(topFrontRight.getY()-distance);
+		topFrontRight.setY(topFrontRight.getY()-(distance*yScale));
 		LevelGridSquare front=new LevelGridSquare(topFrontLeft,topFrontRight,bottomFrontLeft,bottomFrontRight);
 		g.fillPolygon(front.getPolygon());
 		g.setColor(Color.BLACK);
