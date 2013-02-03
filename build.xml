@@ -45,7 +45,7 @@
 				</archives>
 			</restrict>
 			<manifest>
-				<attribute name="Main-Class" value="net.brwyatt.badscience.Main"/>
+				<attribute name="Main-Class" value="com.junglecatsoftware.badscience.Main"/>
 			</manifest>
 		</jar>
 	</target>
@@ -54,7 +54,7 @@
 		<!-- Put only the BadScience in ${build} into the BadScience-${buildId}.jar file (and make it run Bad Science!) -->
 		<jar jarfile="${artifacts}/BadScience-${buildId}.jar" basedir="${build}">
 			<manifest>
-				<attribute name="Main-Class" value="net.brwyatt.badscience.Main"/>
+				<attribute name="Main-Class" value="com.junglecatsoftware.badscience.Main"/>
 			</manifest>
 		</jar>
 	</target>
