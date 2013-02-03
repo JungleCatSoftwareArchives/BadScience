@@ -17,18 +17,18 @@
  * along with BadScience!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.brwyatt.badscience.levels.menus;
+package com.junglecatsoftware.badscience.levels.menus;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import com.junglecatsoftware.badscience.drawables.MainMenuBackground;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
 import com.junglecatsoftware.brge.graphics.ScreenObjects;
 import com.junglecatsoftware.brge.graphics.drawables.MenuItem;
 import com.junglecatsoftware.brge.levels.Level;
 
-import net.brwyatt.badscience.drawables.MainMenuBackground;
 
 public class MainMenu extends Level{
 	

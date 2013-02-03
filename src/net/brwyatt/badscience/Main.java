@@ -17,12 +17,12 @@
  * along with BadScience!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.brwyatt.badscience;
+package com.junglecatsoftware.badscience;
 
+import com.junglecatsoftware.badscience.BadScience;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.graphics.ScreenObjects;
 
-import net.brwyatt.badscience.BadScience;
 
 public class Main {
 

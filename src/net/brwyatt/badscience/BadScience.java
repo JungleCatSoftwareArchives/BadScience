@@ -17,18 +17,18 @@
  * along with BadScience!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.brwyatt.badscience;
+package com.junglecatsoftware.badscience;
 
 import java.util.ArrayList;
 
+import com.junglecatsoftware.badscience.levels.levels.TestLevel;
+import com.junglecatsoftware.badscience.levels.menus.MainMenu;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
 import com.junglecatsoftware.brge.graphics.ScreenObjects;
 import com.junglecatsoftware.brge.levelgrid.LevelGrid;
 import com.junglecatsoftware.brge.levels.Level;
 
-import net.brwyatt.badscience.levels.levels.TestLevel;
-import net.brwyatt.badscience.levels.menus.MainMenu;
 
 
 public class BadScience extends Game {

@@ -17,13 +17,17 @@
  * along with BadScience!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.brwyatt.badscience.levels.levels;
+package com.junglecatsoftware.badscience.levels.levels;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.junglecatsoftware.badscience.drawables.FloorTile;
+import com.junglecatsoftware.badscience.drawables.GridOverlay;
+import com.junglecatsoftware.badscience.drawables.PauseMenuOverlayBackground;
+import com.junglecatsoftware.badscience.drawables.WallTile;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
 import com.junglecatsoftware.brge.graphics.ScreenObjects;
@@ -34,10 +38,6 @@ import com.junglecatsoftware.brge.levelgrid.LevelGrid;
 import com.junglecatsoftware.brge.levelgrid.LevelGridSquare;
 import com.junglecatsoftware.brge.levels.Level;
 
-import net.brwyatt.badscience.drawables.GridOverlay;
-import net.brwyatt.badscience.drawables.FloorTile;
-import net.brwyatt.badscience.drawables.WallTile;
-import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
 
 
 public class TestLevel extends Level{

@@ -17,7 +17,7 @@
  * along with BadScience!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.brwyatt.badscience.drawables;
+package com.junglecatsoftware.badscience.drawables;
 
 import java.awt.Color;
 import java.awt.Graphics;
