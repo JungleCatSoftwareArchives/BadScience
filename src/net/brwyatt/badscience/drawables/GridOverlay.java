@@ -22,9 +22,10 @@ package net.brwyatt.badscience.drawables;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import net.brwyatt.brge.graphics.drawables.Drawable;
-import net.brwyatt.brge.levelgrid.LevelGrid;
-import net.brwyatt.brge.levelgrid.LevelGridSquare;
+import com.junglecatsoftware.brge.graphics.drawables.Drawable;
+import com.junglecatsoftware.brge.levelgrid.LevelGrid;
+import com.junglecatsoftware.brge.levelgrid.LevelGridSquare;
+
 
 public class GridOverlay implements Drawable {
 	private int width=800;

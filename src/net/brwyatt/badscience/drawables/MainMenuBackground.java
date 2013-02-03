@@ -22,7 +22,8 @@ package net.brwyatt.badscience.drawables;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import net.brwyatt.brge.graphics.drawables.Drawable;
+import com.junglecatsoftware.brge.graphics.drawables.Drawable;
+
 
 public class MainMenuBackground implements Drawable {
 	private int width=800;

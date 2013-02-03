@@ -22,9 +22,10 @@ package net.brwyatt.badscience.drawables;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import net.brwyatt.brge.graphics.drawables.LevelGridDrawable;
-import net.brwyatt.brge.levelgrid.LevelGridPoint;
-import net.brwyatt.brge.levelgrid.LevelGridSquare;
+import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
+import com.junglecatsoftware.brge.levelgrid.LevelGridPoint;
+import com.junglecatsoftware.brge.levelgrid.LevelGridSquare;
+
 
 public class FloorTile implements LevelGridDrawable {
 	private LevelGridSquare levelGridSquare;

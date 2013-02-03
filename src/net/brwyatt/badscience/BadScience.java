@@ -21,13 +21,14 @@ package net.brwyatt.badscience;
 
 import java.util.ArrayList;
 
+import com.junglecatsoftware.brge.BRGE;
+import com.junglecatsoftware.brge.Game;
+import com.junglecatsoftware.brge.graphics.ScreenObjects;
+import com.junglecatsoftware.brge.levelgrid.LevelGrid;
+import com.junglecatsoftware.brge.levels.Level;
+
 import net.brwyatt.badscience.levels.levels.TestLevel;
 import net.brwyatt.badscience.levels.menus.MainMenu;
-import net.brwyatt.brge.BRGE;
-import net.brwyatt.brge.Game;
-import net.brwyatt.brge.graphics.ScreenObjects;
-import net.brwyatt.brge.levelgrid.LevelGrid;
-import net.brwyatt.brge.levels.Level;
 
 
 public class BadScience extends Game {

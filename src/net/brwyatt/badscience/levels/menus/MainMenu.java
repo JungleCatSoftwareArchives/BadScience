@@ -22,12 +22,13 @@ package net.brwyatt.badscience.levels.menus;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import com.junglecatsoftware.brge.BRGE;
+import com.junglecatsoftware.brge.Game;
+import com.junglecatsoftware.brge.graphics.ScreenObjects;
+import com.junglecatsoftware.brge.graphics.drawables.MenuItem;
+import com.junglecatsoftware.brge.levels.Level;
+
 import net.brwyatt.badscience.drawables.MainMenuBackground;
-import net.brwyatt.brge.BRGE;
-import net.brwyatt.brge.Game;
-import net.brwyatt.brge.graphics.ScreenObjects;
-import net.brwyatt.brge.graphics.drawables.MenuItem;
-import net.brwyatt.brge.levels.Level;
 
 public class MainMenu extends Level{
 	

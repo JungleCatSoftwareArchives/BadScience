@@ -24,10 +24,11 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.ArrayList;
 
-import net.brwyatt.brge.BRGE;
-import net.brwyatt.brge.graphics.drawables.LevelGridDrawable;
-import net.brwyatt.brge.levelgrid.LevelGridPoint;
-import net.brwyatt.brge.levelgrid.LevelGridSquare;
+import com.junglecatsoftware.brge.BRGE;
+import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
+import com.junglecatsoftware.brge.levelgrid.LevelGridPoint;
+import com.junglecatsoftware.brge.levelgrid.LevelGridSquare;
+
 
 public class WallTile implements LevelGridDrawable {
 	private LevelGridSquare levelGridSquare;

@@ -19,9 +19,10 @@
 
 package net.brwyatt.badscience;
 
+import com.junglecatsoftware.brge.BRGE;
+import com.junglecatsoftware.brge.graphics.ScreenObjects;
+
 import net.brwyatt.badscience.BadScience;
-import net.brwyatt.brge.BRGE;
-import net.brwyatt.brge.graphics.ScreenObjects;
 
 public class Main {
 

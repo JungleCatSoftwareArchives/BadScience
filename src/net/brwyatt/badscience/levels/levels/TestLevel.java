@@ -24,19 +24,20 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.junglecatsoftware.brge.BRGE;
+import com.junglecatsoftware.brge.Game;
+import com.junglecatsoftware.brge.graphics.ScreenObjects;
+import com.junglecatsoftware.brge.graphics.drawables.BlackBackground;
+import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
+import com.junglecatsoftware.brge.graphics.drawables.MenuItem;
+import com.junglecatsoftware.brge.levelgrid.LevelGrid;
+import com.junglecatsoftware.brge.levelgrid.LevelGridSquare;
+import com.junglecatsoftware.brge.levels.Level;
+
 import net.brwyatt.badscience.drawables.GridOverlay;
 import net.brwyatt.badscience.drawables.FloorTile;
 import net.brwyatt.badscience.drawables.WallTile;
-import net.brwyatt.brge.BRGE;
-import net.brwyatt.brge.Game;
 import net.brwyatt.badscience.drawables.PauseMenuOverlayBackground;
-import net.brwyatt.brge.graphics.ScreenObjects;
-import net.brwyatt.brge.graphics.drawables.BlackBackground;
-import net.brwyatt.brge.graphics.drawables.LevelGridDrawable;
-import net.brwyatt.brge.graphics.drawables.MenuItem;
-import net.brwyatt.brge.levelgrid.LevelGrid;
-import net.brwyatt.brge.levelgrid.LevelGridSquare;
-import net.brwyatt.brge.levels.Level;
 
 
 public class TestLevel extends Level{

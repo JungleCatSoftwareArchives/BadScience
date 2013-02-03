@@ -23,7 +23,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import net.brwyatt.brge.graphics.drawables.Drawable;
+import com.junglecatsoftware.brge.graphics.drawables.Drawable;
+
 
 
 public class PauseMenuOverlayBackground implements Drawable {
