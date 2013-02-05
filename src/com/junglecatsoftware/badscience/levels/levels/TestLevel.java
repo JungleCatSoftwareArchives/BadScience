@@ -33,6 +33,7 @@ import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
 import com.junglecatsoftware.brge.graphics.ScreenObjects;
 import com.junglecatsoftware.brge.graphics.drawables.BlackBackground;
+import com.junglecatsoftware.brge.graphics.drawables.Drawable;
 import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
 import com.junglecatsoftware.brge.graphics.drawables.MenuItem;
 import com.junglecatsoftware.brge.levelgrid.LevelGrid;
@@ -62,6 +63,7 @@ public class TestLevel extends Level{
 	private int topWallTile;
 	
 	private LevelGrid levelGrid;
+	private LevelGridSquare centerGridSquare;
 	
 	private boolean exitselected=false;
 	
@@ -89,9 +91,11 @@ public class TestLevel extends Level{
 				loadTile(square);
 			}
 		}
-		
-		player=new Player(levelGrid.getGridSquare((levelGrid.getGridWidth()-1)/2,(levelGrid.getGridHeight())/2).copy(), Color.BLACK);
-		screenObjects.addToTop(player);
+		centerGridSquare=levelGrid.getGridSquare((levelGrid.getGridWidth()-1)/2,(levelGrid.getGridHeight())/2);
+
+		player=new Player(centerGridSquare.copy(), Color.BLACK);
+		setPlayerZOrder();
+		topWallTile++;
 		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=false;
@@ -243,6 +247,10 @@ public class TestLevel extends Level{
 						}
 					}
 				}
+			}
+			
+			if(counter%500==0){
+				setPlayerZOrder();
 			}
 			
 			if(counter==1000){//reset shifting
@@ -509,6 +517,26 @@ public class TestLevel extends Level{
 			screenObjects.addAtIndex(topFloorTile,tile);
 		}
 		square.getObjects().add(tile);
+	}
+	private void setPlayerZOrder(){
+		System.out.println("*****START*****");
+		int playerIndex=screenObjects.count()-1;
+		ArrayList<LevelGridDrawable> objectsOfInterest=new ArrayList<LevelGridDrawable>(centerGridSquare.getBelow().getObjects());
+		objectsOfInterest.addAll(centerGridSquare.getBelow().getLeft().getObjects());
+		objectsOfInterest.addAll(centerGridSquare.getBelow().getRight().getObjects());
+		objectsOfInterest.addAll(centerGridSquare.getBelow().getBelow().getObjects());
+		for(LevelGridDrawable d : objectsOfInterest){
+			if(d instanceof WallTile){
+				int i=screenObjects.lastIndexOf(d);
+				System.out.println("OBJECT INDEX: "+i);
+				if(i<playerIndex){
+					playerIndex=i;
+				}
+			}
+		}
+		System.out.println("PLAYER INDEX: "+playerIndex);
+		screenObjects.remove(player);
+		screenObjects.addAtIndex(playerIndex-1, player);
 	}
 	@SuppressWarnings("static-access")
 	public static void wait(int millis){
