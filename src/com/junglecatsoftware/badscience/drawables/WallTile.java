@@ -67,10 +67,10 @@ public class WallTile implements LevelGridDrawable {
 		double yScale=2.0/3.0;
 		
 		//get bottom grid vertices
-		LevelGridPoint bottomFrontLeft=levelGridSquare.getBottomLeft().copy();
-		LevelGridPoint bottomFrontRight=levelGridSquare.getBottomRight().copy();
-		LevelGridPoint bottomBackLeft=levelGridSquare.getTopLeft().copy();
-		LevelGridPoint bottomBackRight=levelGridSquare.getTopRight().copy();
+		LevelGridPoint bottomFrontLeft=levelGridSquare.getBottomLeft();
+		LevelGridPoint bottomFrontRight=levelGridSquare.getBottomRight();
+		LevelGridPoint bottomBackLeft=levelGridSquare.getTopLeft();
+		LevelGridPoint bottomBackRight=levelGridSquare.getTopRight();
 		
 		//find top vertices
 		int bottomFrontDistance=bottomFrontRight.getX()-bottomFrontLeft.getX();
