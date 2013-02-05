@@ -21,8 +21,6 @@ package com.junglecatsoftware.badscience.drawables;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
-import java.util.ArrayList;
 
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
