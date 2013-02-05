@@ -27,6 +27,7 @@ import java.util.Random;
 import com.junglecatsoftware.badscience.drawables.FloorTile;
 import com.junglecatsoftware.badscience.drawables.GridOverlay;
 import com.junglecatsoftware.badscience.drawables.PauseMenuOverlayBackground;
+import com.junglecatsoftware.badscience.drawables.Player;
 import com.junglecatsoftware.badscience.drawables.WallTile;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
@@ -46,6 +47,7 @@ public class TestLevel extends Level{
 	private boolean pause=false;
 	private Thread t;
 	private GridOverlay overlay;
+	private Player player;
 	private boolean showOverlay;
 	private boolean startShiftLeft;
 	private boolean startShiftRight;
