@@ -27,11 +27,13 @@ import java.util.Random;
 import com.junglecatsoftware.badscience.drawables.FloorTile;
 import com.junglecatsoftware.badscience.drawables.GridOverlay;
 import com.junglecatsoftware.badscience.drawables.PauseMenuOverlayBackground;
+import com.junglecatsoftware.badscience.drawables.Player;
 import com.junglecatsoftware.badscience.drawables.WallTile;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
 import com.junglecatsoftware.brge.graphics.ScreenObjects;
 import com.junglecatsoftware.brge.graphics.drawables.BlackBackground;
+import com.junglecatsoftware.brge.graphics.drawables.Drawable;
 import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
 import com.junglecatsoftware.brge.graphics.drawables.MenuItem;
 import com.junglecatsoftware.brge.levelgrid.LevelGrid;
@@ -46,6 +48,7 @@ public class TestLevel extends Level{
 	private boolean pause=false;
 	private Thread t;
 	private GridOverlay overlay;
+	private Player player;
 	private boolean showOverlay;
 	private boolean startShiftLeft;
 	private boolean startShiftRight;
@@ -56,10 +59,8 @@ public class TestLevel extends Level{
 	private boolean shiftingUp;
 	private boolean shiftingDown;
 	
-	private int topFloorTile;
-	private int topWallTile;
-	
 	private LevelGrid levelGrid;
+	private LevelGridSquare centerGridSquare;
 	
 	private boolean exitselected=false;
 	
@@ -78,15 +79,17 @@ public class TestLevel extends Level{
 
 		screenObjects.addToBottom(new BlackBackground());
 		
-		//initialize index for objects
-		topFloorTile=topWallTile=screenObjects.count()-1;
-		
 		for(int y=0;y<levelGrid.getGridHeight();y+=1){
 			for(int x=0;x<levelGrid.getGridWidth();x+=1){
 				LevelGridSquare square=levelGrid.getGridSquare(x, y);
 				loadTile(square);
 			}
 		}
+		
+		screenObjects.addToTop(levelGrid);
+		centerGridSquare=levelGrid.getGridSquare((levelGrid.getGridWidth()-1)/2,(levelGrid.getGridHeight())/2);
+		player=new Player(centerGridSquare.copy(), Color.BLACK);
+		levelGrid.setPlayerDrawable(player);
 		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=false;
@@ -381,7 +384,6 @@ public class TestLevel extends Level{
 		ArrayList<LevelGridDrawable> objects = square.getObjects();
 		for(LevelGridDrawable d : objects){
 			if(d instanceof WallTile){
-				topWallTile-=1;
 				//check above to see if we need to inform walls to render their front
 				try{
 					LevelGridSquare above=square.getAbove();
@@ -412,9 +414,6 @@ public class TestLevel extends Level{
 					}
 				}catch(Exception e){
 				}
-			}else{
-				topFloorTile-=1;
-				topWallTile-=1;
 			}
 			screenObjects.remove(d);
 		}
@@ -425,37 +424,10 @@ public class TestLevel extends Level{
 		LevelGridDrawable tile;
 		if(rand.nextInt(4)==0){
 			tile=new WallTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-			topWallTile+=1;
-			
-			int pos=topWallTile;
 			
 			//check below to see if we need to render the front
 			try{
 				LevelGridSquare below=square.getBelow();
-				//Also See if there is a wall segment below to the left that we must render before
-				try{
-					for(LevelGridDrawable d : below.getLeft().getObjects()){
-						if(d instanceof WallTile){
-							int i=screenObjects.lastIndexOf(d);
-							if(i<pos){
-								pos=i;
-							}
-						}
-					}
-				}catch(Exception e){
-				}
-				//Also See if there is a wall segment below to the right that we must render before
-				try{
-					for(LevelGridDrawable d : below.getRight().getObjects()){
-						if(d instanceof WallTile){
-							int i=screenObjects.lastIndexOf(d);
-							if(i<pos){
-								pos=i;
-							}
-						}
-					}
-				}catch(Exception e){
-				}
 				for(LevelGridDrawable d : below.getObjects()){
 					if(d instanceof WallTile){
 						((WallTile)tile).setRenderFront(false);
@@ -496,12 +468,8 @@ public class TestLevel extends Level{
 				}
 			}catch(Exception e){
 			}
-			screenObjects.addAtIndex(pos,tile);
 		}else{
 			tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-			topFloorTile+=1;
-			topWallTile+=1;
-			screenObjects.addAtIndex(topFloorTile,tile);
 		}
 		square.getObjects().add(tile);
 	}
