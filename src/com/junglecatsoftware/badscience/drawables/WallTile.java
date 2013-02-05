@@ -21,8 +21,6 @@ package com.junglecatsoftware.badscience.drawables;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
-import java.util.ArrayList;
 
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.graphics.drawables.LevelGridDrawable;
@@ -64,31 +62,32 @@ public class WallTile implements LevelGridDrawable {
 	
 	public void draw(Graphics g) {
 		Color tmp=g.getColor();
-		
-		double xScale=1.0/10.0;
-		double yScale=2.0/3.0;
+
+		int xScale=10;
+		int yScaleTop=2;
+		int yScaleBottom=3;
 		
 		//get bottom grid vertices
-		LevelGridPoint bottomFrontLeft=levelGridSquare.getBottomLeft().copy();
-		LevelGridPoint bottomFrontRight=levelGridSquare.getBottomRight().copy();
-		LevelGridPoint bottomBackLeft=levelGridSquare.getTopLeft().copy();
-		LevelGridPoint bottomBackRight=levelGridSquare.getTopRight().copy();
+		LevelGridPoint bottomFrontLeft=levelGridSquare.getBottomLeft();
+		LevelGridPoint bottomFrontRight=levelGridSquare.getBottomRight();
+		LevelGridPoint bottomBackLeft=levelGridSquare.getTopLeft();
+		LevelGridPoint bottomBackRight=levelGridSquare.getTopRight();
 		
 		//find top vertices
 		int bottomFrontDistance=bottomFrontRight.getX()-bottomFrontLeft.getX();
 		LevelGridPoint topFrontLeft=bottomFrontLeft.copy();
-		topFrontLeft.setX(topFrontLeft.getX()+((topFrontLeft.getX()-(BRGE.getWidth()/2))*xScale));
-		topFrontLeft.setY(topFrontLeft.getY()-(bottomFrontDistance*yScale));
+		topFrontLeft.setX(topFrontLeft.getX()+((topFrontLeft.getX()-(BRGE.getWidth()/2))/xScale));
+		topFrontLeft.setY(topFrontLeft.getY()-(bottomFrontDistance*yScaleTop/yScaleBottom));
 		LevelGridPoint topFrontRight=bottomFrontRight.copy();
-		topFrontRight.setX(topFrontRight.getX()+((topFrontRight.getX()-(BRGE.getWidth()/2))*xScale));
-		topFrontRight.setY(topFrontRight.getY()-(bottomFrontDistance*yScale));
+		topFrontRight.setX(topFrontRight.getX()+((topFrontRight.getX()-(BRGE.getWidth()/2))/xScale));
+		topFrontRight.setY(topFrontRight.getY()-(bottomFrontDistance*yScaleTop/yScaleBottom));
 		int bottomBackDistance=bottomBackRight.getX()-bottomBackLeft.getX();
 		LevelGridPoint topBackLeft=bottomBackLeft.copy();
-		topBackLeft.setX(topBackLeft.getX()+((topBackLeft.getX()-(BRGE.getWidth()/2))*xScale));
-		topBackLeft.setY(topBackLeft.getY()-(bottomBackDistance*yScale));
+		topBackLeft.setX(topBackLeft.getX()+((topBackLeft.getX()-(BRGE.getWidth()/2))/xScale));
+		topBackLeft.setY(topBackLeft.getY()-(bottomBackDistance*yScaleTop/yScaleBottom));
 		LevelGridPoint topBackRight=bottomBackRight.copy();
-		topBackRight.setX(topBackRight.getX()+((topBackRight.getX()-(BRGE.getWidth()/2))*xScale));
-		topBackRight.setY(topBackRight.getY()-(bottomBackDistance*yScale));
+		topBackRight.setX(topBackRight.getX()+((topBackRight.getX()-(BRGE.getWidth()/2))/xScale));
+		topBackRight.setY(topBackRight.getY()-(bottomBackDistance*yScaleTop/yScaleBottom));
 		
 		if(renderFront){
 			//draw front
