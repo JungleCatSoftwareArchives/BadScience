@@ -90,6 +90,9 @@ public class TestLevel extends Level{
 			}
 		}
 		
+		player=new Player(levelGrid.getGridSquare((levelGrid.getGridWidth()-1)/2,(levelGrid.getGridHeight())/2).copy(), Color.BLACK);
+		screenObjects.addToTop(player);
+		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=false;
 		//screenObjects.addToTop(overlay);
