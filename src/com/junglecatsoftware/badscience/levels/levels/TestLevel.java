@@ -59,9 +59,6 @@ public class TestLevel extends Level{
 	private boolean shiftingUp;
 	private boolean shiftingDown;
 	
-	private int topFloorTile;
-	private int topWallTile;
-	
 	private LevelGrid levelGrid;
 	private LevelGridSquare centerGridSquare;
 	
@@ -82,20 +79,17 @@ public class TestLevel extends Level{
 
 		screenObjects.addToBottom(new BlackBackground());
 		
-		//initialize index for objects
-		topFloorTile=topWallTile=screenObjects.count()-1;
-		
 		for(int y=0;y<levelGrid.getGridHeight();y+=1){
 			for(int x=0;x<levelGrid.getGridWidth();x+=1){
 				LevelGridSquare square=levelGrid.getGridSquare(x, y);
 				loadTile(square);
 			}
 		}
+		
+		screenObjects.addToTop(levelGrid);
 		centerGridSquare=levelGrid.getGridSquare((levelGrid.getGridWidth()-1)/2,(levelGrid.getGridHeight())/2);
-
 		player=new Player(centerGridSquare.copy(), Color.BLACK);
-		setPlayerZOrder();
-		topWallTile++;
+		levelGrid.setPlayerDrawable(player);
 		
 		overlay=new GridOverlay(levelGrid);
 		showOverlay=false;
@@ -249,10 +243,6 @@ public class TestLevel extends Level{
 				}
 			}
 			
-			if(counter%500==0){
-				setPlayerZOrder();
-			}
-			
 			if(counter==1000){//reset shifting
 				
 				if(shiftingLeft||shiftingRight){
@@ -394,7 +384,6 @@ public class TestLevel extends Level{
 		ArrayList<LevelGridDrawable> objects = square.getObjects();
 		for(LevelGridDrawable d : objects){
 			if(d instanceof WallTile){
-				topWallTile-=1;
 				//check above to see if we need to inform walls to render their front
 				try{
 					LevelGridSquare above=square.getAbove();
@@ -425,9 +414,6 @@ public class TestLevel extends Level{
 					}
 				}catch(Exception e){
 				}
-			}else{
-				topFloorTile-=1;
-				topWallTile-=1;
 			}
 			screenObjects.remove(d);
 		}
@@ -438,37 +424,10 @@ public class TestLevel extends Level{
 		LevelGridDrawable tile;
 		if(rand.nextInt(4)==0){
 			tile=new WallTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-			topWallTile+=1;
-			
-			int pos=topWallTile;
 			
 			//check below to see if we need to render the front
 			try{
 				LevelGridSquare below=square.getBelow();
-				//Also See if there is a wall segment below to the left that we must render before
-				try{
-					for(LevelGridDrawable d : below.getLeft().getObjects()){
-						if(d instanceof WallTile){
-							int i=screenObjects.lastIndexOf(d);
-							if(i<pos){
-								pos=i;
-							}
-						}
-					}
-				}catch(Exception e){
-				}
-				//Also See if there is a wall segment below to the right that we must render before
-				try{
-					for(LevelGridDrawable d : below.getRight().getObjects()){
-						if(d instanceof WallTile){
-							int i=screenObjects.lastIndexOf(d);
-							if(i<pos){
-								pos=i;
-							}
-						}
-					}
-				}catch(Exception e){
-				}
 				for(LevelGridDrawable d : below.getObjects()){
 					if(d instanceof WallTile){
 						((WallTile)tile).setRenderFront(false);
@@ -509,34 +468,10 @@ public class TestLevel extends Level{
 				}
 			}catch(Exception e){
 			}
-			screenObjects.addAtIndex(pos,tile);
 		}else{
 			tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
-			topFloorTile+=1;
-			topWallTile+=1;
-			screenObjects.addAtIndex(topFloorTile,tile);
 		}
 		square.getObjects().add(tile);
-	}
-	private void setPlayerZOrder(){
-		System.out.println("*****START*****");
-		int playerIndex=screenObjects.count()-1;
-		ArrayList<LevelGridDrawable> objectsOfInterest=new ArrayList<LevelGridDrawable>(centerGridSquare.getBelow().getObjects());
-		objectsOfInterest.addAll(centerGridSquare.getBelow().getLeft().getObjects());
-		objectsOfInterest.addAll(centerGridSquare.getBelow().getRight().getObjects());
-		objectsOfInterest.addAll(centerGridSquare.getBelow().getBelow().getObjects());
-		for(LevelGridDrawable d : objectsOfInterest){
-			if(d instanceof WallTile){
-				int i=screenObjects.lastIndexOf(d);
-				System.out.println("OBJECT INDEX: "+i);
-				if(i<playerIndex){
-					playerIndex=i;
-				}
-			}
-		}
-		System.out.println("PLAYER INDEX: "+playerIndex);
-		screenObjects.remove(player);
-		screenObjects.addAtIndex(playerIndex-1, player);
 	}
 	@SuppressWarnings("static-access")
 	public static void wait(int millis){
