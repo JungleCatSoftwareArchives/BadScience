@@ -86,7 +86,7 @@ public class MainMenu extends Level{
 				break;
 			case 2:
 				BRGE.toggleShadows();
-				items.get(2).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
+				items.get(selectedItem).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
 				break;
 			case 3:
 				BRGE.exit();

@@ -214,6 +214,7 @@ public class TestLevel extends Level{
 				screenObjects.addToTop(bg);
 				
 				menuItems=new ArrayList<MenuItem>();
+				menuItems.add(new MenuItem(1, "Toggle DrawFPS"));
 				menuItems.add(new MenuItem(2, "Draw Shadows ("+BRGE.getDrawShadows()+")"));
 				menuItems.add(new MenuItem(4, true, "Exit to Main Menu"));
 				for(MenuItem item : menuItems){
@@ -531,10 +532,13 @@ public class TestLevel extends Level{
 	private void menuActivated(){
 		switch(selectedMenuItem){
 			case 0:
-				BRGE.toggleShadows();
-				menuItems.get(0).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
+				BRGE.toggleFPS();
 				break;
 			case 1:
+				BRGE.toggleShadows();
+				menuItems.get(selectedMenuItem).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
+				break;
+			case 2:
 				game.loadLevel(0);
 				break;
 		}
