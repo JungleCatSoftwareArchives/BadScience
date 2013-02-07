@@ -354,13 +354,19 @@ public class TestLevel extends Level{
 		double bottomRightDistY=(nextLoc.getBottomRight().getY()-curLoc.getBottomRight().getY())/((double)numSteps);
 		
 		//System.out.println(curLoc.getObjects().size());
-		for(int k=0;k<curLoc.getObjects().size();k++){
-			LevelGridSquare realLoc=curLoc.getObjects().get(k).getGridSquare();
+		for(int k=0;k<curLoc.getAllObjects().size();k++){
+			LevelGridSquare realLoc=curLoc.getAllObjects().get(k).getGridSquare();
 			
 			if(counter==1000){
-				LevelGridDrawable object=curLoc.getObjects().get(k);
-				curLoc.getObjects().remove(object);
-				nextLoc.getObjects().add(object);
+				LevelGridDrawable object=curLoc.getAllObjects().get(k);
+				if(curLoc.getGroundObjects().remove(object)){
+					nextLoc.getGroundObjects().add(object);
+				}else if(curLoc.getMiddleObjects().remove(object)){
+					nextLoc.getMiddleObjects().add(object);
+				}else if(curLoc.getGroundObjects().remove(object)){
+					nextLoc.getMiddleObjects().add(object);
+				}//else: wtf?
+				
 				object.setGridSquare(nextLoc.copy());
 			}else{
 				realLoc.getTopLeft().setX(realLoc.getTopLeft().getRealX()+topLeftDistX);
@@ -381,13 +387,13 @@ public class TestLevel extends Level{
 	}
 	private void clearObjects(LevelGridSquare square){
 		//clear the objects
-		ArrayList<LevelGridDrawable> objects = square.getObjects();
-		for(LevelGridDrawable d : objects){
+		ArrayList<LevelGridDrawable> middleObjects = square.getMiddleObjects();
+		for(LevelGridDrawable d : middleObjects){
 			if(d instanceof WallTile){
 				//check above to see if we need to inform walls to render their front
 				try{
 					LevelGridSquare above=square.getAbove();
-					for(LevelGridDrawable d2 : above.getObjects()){
+					for(LevelGridDrawable d2 : above.getMiddleObjects()){
 						if(d2 instanceof WallTile){
 							((WallTile)d2).setRenderFront(true);
 						}
@@ -397,7 +403,7 @@ public class TestLevel extends Level{
 				//check left to see if we need to inform walls to render their right
 				try{
 					LevelGridSquare left=square.getLeft();
-					for(LevelGridDrawable d2 : left.getObjects()){
+					for(LevelGridDrawable d2 : left.getMiddleObjects()){
 						if(d2 instanceof WallTile){
 							((WallTile)d2).setRenderRight(true);
 						}
@@ -407,7 +413,7 @@ public class TestLevel extends Level{
 				//check right to see if we need to inform walls to render their left
 				try{
 					LevelGridSquare right=square.getRight();
-					for(LevelGridDrawable d2 : right.getObjects()){
+					for(LevelGridDrawable d2 : right.getMiddleObjects()){
 						if(d2 instanceof WallTile){
 							((WallTile)d2).setRenderLeft(true);
 						}
@@ -417,7 +423,7 @@ public class TestLevel extends Level{
 			}
 			screenObjects.remove(d);
 		}
-		objects.clear();
+		square.clearAllObjects();
 	}
 	private void loadTile(LevelGridSquare square){
 		Random rand=new Random();
@@ -428,7 +434,7 @@ public class TestLevel extends Level{
 			//check below to see if we need to render the front
 			try{
 				LevelGridSquare below=square.getBelow();
-				for(LevelGridDrawable d : below.getObjects()){
+				for(LevelGridDrawable d : below.getMiddleObjects()){
 					if(d instanceof WallTile){
 						((WallTile)tile).setRenderFront(false);
 						break;
@@ -439,7 +445,7 @@ public class TestLevel extends Level{
 			//check above to see if we need to inform walls to not render their front
 			try{
 				LevelGridSquare above=square.getAbove();
-				for(LevelGridDrawable d : above.getObjects()){
+				for(LevelGridDrawable d : above.getMiddleObjects()){
 					if(d instanceof WallTile){
 						((WallTile)d).setRenderFront(false);
 					}
@@ -449,7 +455,7 @@ public class TestLevel extends Level{
 			//check left to see if we need to render the left and inform walls to not render their right
 			try{
 				LevelGridSquare left=square.getLeft();
-				for(LevelGridDrawable d : left.getObjects()){
+				for(LevelGridDrawable d : left.getMiddleObjects()){
 					if(d instanceof WallTile){
 						((WallTile)d).setRenderRight(false);
 						((WallTile)tile).setRenderLeft(false);
@@ -460,7 +466,7 @@ public class TestLevel extends Level{
 			//check right to see if we need to render the right and inform walls to not render their left
 			try{
 				LevelGridSquare right=square.getRight();
-				for(LevelGridDrawable d : right.getObjects()){
+				for(LevelGridDrawable d : right.getMiddleObjects()){
 					if(d instanceof WallTile){
 						((WallTile)d).setRenderLeft(false);
 						((WallTile)tile).setRenderRight(false);
@@ -468,10 +474,11 @@ public class TestLevel extends Level{
 				}
 			}catch(Exception e){
 			}
+			square.getMiddleObjects().add(tile);
 		}else{
 			tile=new FloorTile(square,new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat()));
+			square.getGroundObjects().add(tile);
 		}
-		square.getObjects().add(tile);
 	}
 	@SuppressWarnings("static-access")
 	public static void wait(int millis){
