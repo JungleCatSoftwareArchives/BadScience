@@ -233,16 +233,30 @@ public class TestLevel extends Level{
 				}
 			}
 			
-			if(!(shiftingLeft||shiftingRight||shiftingUp||shiftingDown)){
-				if(startShiftLeft&&(!startShiftRight)){
+			if(counter%50==1 && !(shiftingLeft||shiftingRight||shiftingUp||shiftingDown)){
+				if(startShiftLeft&&(!startShiftRight)&&centerGridSquare.getRight().getMiddleObjects().size()==0){
 					shiftingLeft=true;
-				}else if(startShiftRight&&(!startShiftLeft)){
+				}else if(startShiftRight&&(!startShiftLeft)&&centerGridSquare.getLeft().getMiddleObjects().size()==0){
 					shiftingRight=true;
 				}
-				if(startShiftUp&&(!startShiftDown)){
+				if(startShiftUp&&(!startShiftDown)&&centerGridSquare.getBelow().getMiddleObjects().size()==0){
 					shiftingUp=true;
-				}else if(startShiftDown&&(!startShiftUp)){
+				}else if(startShiftDown&&(!startShiftUp)&&centerGridSquare.getAbove().getMiddleObjects().size()==0){
 					shiftingDown=true;
+				}
+				
+				if(shiftingLeft&&shiftingUp&&centerGridSquare.getRight().getBelow().getMiddleObjects().size()!=0){
+					shiftingLeft=false;
+					shiftingUp=false;
+				}else if(shiftingLeft&&shiftingDown&&centerGridSquare.getRight().getAbove().getMiddleObjects().size()!=0){
+					shiftingLeft=false;
+					shiftingDown=false;
+				}else if(shiftingRight&&shiftingUp&&centerGridSquare.getLeft().getBelow().getMiddleObjects().size()!=0){
+					shiftingRight=false;
+					shiftingUp=false;
+				}else if(shiftingRight&&shiftingDown&&centerGridSquare.getLeft().getAbove().getMiddleObjects().size()!=0){
+					shiftingRight=false;
+					shiftingDown=false;
 				}
 				counter=1;
 			}
