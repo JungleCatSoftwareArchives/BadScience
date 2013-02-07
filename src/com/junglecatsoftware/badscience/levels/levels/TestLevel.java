@@ -220,7 +220,7 @@ public class TestLevel extends Level{
 				for(MenuItem item : menuItems){
 					screenObjects.addToTop(item);
 				}
-				selectedMenuItem=1;
+				selectedMenuItem=2;
 				
 				while(pause){
 					wait(10);
