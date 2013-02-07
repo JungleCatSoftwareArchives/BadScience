@@ -209,7 +209,7 @@ public class TestLevel extends Level{
 				screenObjects.remove(item1);
 			}
 			
-			if(counter==1){
+			if(!(shiftingLeft||shiftingRight||shiftingUp||shiftingDown)){
 				if(startShiftLeft&&(!startShiftRight)){
 					shiftingLeft=true;
 				}else if(startShiftRight&&(!startShiftLeft)){
@@ -220,6 +220,7 @@ public class TestLevel extends Level{
 				}else if(startShiftDown&&(!startShiftUp)){
 					shiftingDown=true;
 				}
+				counter=1;
 			}
 			
 			//Only update 50 times/second, and only when actually moving
