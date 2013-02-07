@@ -48,7 +48,7 @@ public class MainMenu extends Level{
 		items=new ArrayList<MenuItem>();
 		items.add(new MenuItem(0, true, "TEST LEVEL"));
 		items.add(new MenuItem(1, "Toggle DrawFPS"));
-		items.add(new MenuItem(2, "Fancy Shadows ("+BRGE.getDrawShadows()+")"));
+		items.add(new MenuItem(2, "DrawShadows ("+BRGE.getDrawShadows()+")"));
 		items.add(new MenuItem(4, "Exit"));
 		for(MenuItem item : items){
 			screenObjects.addToTop(item);
@@ -86,7 +86,7 @@ public class MainMenu extends Level{
 				break;
 			case 2:
 				BRGE.toggleShadows();
-				items.get(2).setText("Fancy Shadows ("+BRGE.getDrawShadows()+")");
+				items.get(2).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
 				break;
 			case 3:
 				BRGE.exit();
