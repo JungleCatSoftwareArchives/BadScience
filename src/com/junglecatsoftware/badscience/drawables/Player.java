@@ -65,7 +65,11 @@ public class Player implements Drawable {
 		bottomBackRight.setY(bottomBackRight.getY()+topTranslator);
 		
 		//draw shadow
-		g.setColor(new Color((float)0, (float)0, (float)0, (float)0.60));
+		if(BRGE.getDrawShadows()){
+			g.setColor(new Color((float)0, (float)0, (float)0, (float)0.60));
+		}else{
+			g.setColor(Color.DARK_GRAY);
+		}
 		LevelGridSquare shadow=new LevelGridSquare(bottomBackLeft,bottomBackRight,bottomFrontLeft,bottomFrontRight);
 		g.fillPolygon(shadow.getPolygon());
 		

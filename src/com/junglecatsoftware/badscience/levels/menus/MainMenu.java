@@ -22,6 +22,7 @@ package com.junglecatsoftware.badscience.levels.menus;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import com.junglecatsoftware.badscience.BadScience;
 import com.junglecatsoftware.badscience.drawables.MainMenuBackground;
 import com.junglecatsoftware.brge.BRGE;
 import com.junglecatsoftware.brge.Game;
@@ -47,10 +48,11 @@ public class MainMenu extends Level{
 		items=new ArrayList<MenuItem>();
 		items.add(new MenuItem(0, true, "TEST LEVEL"));
 		items.add(new MenuItem(1, "Toggle DrawFPS"));
+		items.add(new MenuItem(2, "Draw Shadows ("+BRGE.getDrawShadows()+")"));
 		items.add(new MenuItem(4, "Exit"));
-		screenObjects.addToTop(items.get(0));
-		screenObjects.addToTop(items.get(1));
-		screenObjects.addToTop(items.get(2));
+		for(MenuItem item : items){
+			screenObjects.addToTop(item);
+		}
 		
 		selectedItem=0;
 	}
@@ -83,6 +85,10 @@ public class MainMenu extends Level{
 				BRGE.toggleFPS();
 				break;
 			case 2:
+				BRGE.toggleShadows();
+				items.get(selectedItem).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
+				break;
+			case 3:
 				BRGE.exit();
 				break;
 		}

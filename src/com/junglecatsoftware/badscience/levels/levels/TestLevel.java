@@ -61,8 +61,11 @@ public class TestLevel extends Level{
 	
 	private LevelGrid levelGrid;
 	private LevelGridSquare centerGridSquare;
-	
-	private boolean exitselected=false;
+
+	//stuff for the menu
+	private ArrayList<MenuItem> menuItems;
+	private int selectedMenuItem=0;
+	private boolean menuSelected=false; //Ensure that menu items can't be triggered if the spacebar was pressed prior to the menu loading
 	
 	public TestLevel(Game g, ScreenObjects so){
 		super(g, so);
@@ -121,19 +124,25 @@ public class TestLevel extends Level{
 				startShiftLeft=true;
 				break;
 			case KeyEvent.VK_UP:
+				if(pause){
+					menuUp();
+				}
 				startShiftDown=true;
 				break;
 			case KeyEvent.VK_DOWN:
+				if(pause){
+					menuDown();
+				}
 				startShiftUp=true;
 				break;
 			case KeyEvent.VK_SPACE:
 				if(pause){
-					exitselected=true;
+					menuSelected=true;
 				}
 				break;
 			case KeyEvent.VK_ENTER:
 				if(pause){
-					exitselected=true;
+					menuSelected=true;
 				}
 				break;
 		}
@@ -153,21 +162,27 @@ public class TestLevel extends Level{
 				startShiftUp=false;
 				break;
 			case KeyEvent.VK_SPACE:
-				if(pause && exitselected){
-					game.loadLevel(0);
+				if(pause){
+					if(menuSelected){
+						menuSelected=false;
+						menuActivated();
+					}
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
 				if(pause){
-					exitselected=false;
+					menuSelected=false;
 					pause=false;
 				}else{
 					pause=true;
 				}
 				break;
 			case KeyEvent.VK_ENTER:
-				if(pause && exitselected){
-					game.loadLevel(0);
+				if(pause){
+					if(menuSelected){
+						menuSelected=false;
+						menuActivated();
+					}
 				}
 				break;
 			case KeyEvent.VK_G:
@@ -196,9 +211,16 @@ public class TestLevel extends Level{
 			if(pause){//if game has been paused
 				//create and display menu
 				PauseMenuOverlayBackground bg=new PauseMenuOverlayBackground();
-				MenuItem item1=new MenuItem(4, true, "Exit to Main Menu");
 				screenObjects.addToTop(bg);
-				screenObjects.addToTop(item1);
+				
+				menuItems=new ArrayList<MenuItem>();
+				menuItems.add(new MenuItem(1, "Toggle DrawFPS"));
+				menuItems.add(new MenuItem(2, "Draw Shadows ("+BRGE.getDrawShadows()+")"));
+				menuItems.add(new MenuItem(4, true, "Exit to Main Menu"));
+				for(MenuItem item : menuItems){
+					screenObjects.addToTop(item);
+				}
+				selectedMenuItem=2;
 				
 				while(pause){
 					wait(10);
@@ -206,7 +228,9 @@ public class TestLevel extends Level{
 				
 				//remove menu from screen
 				screenObjects.remove(bg);
-				screenObjects.remove(item1);
+				for(MenuItem item : menuItems){
+					screenObjects.remove(item);
+				}
 			}
 			
 			if(!(shiftingLeft||shiftingRight||shiftingUp||shiftingDown)){
@@ -486,6 +510,37 @@ public class TestLevel extends Level{
 		try {
 			Thread.currentThread().sleep(millis);
 		} catch (InterruptedException e) {
+		}
+	}
+
+	private void menuUp(){
+		menuItems.get(selectedMenuItem).setSelected(false);
+		selectedMenuItem--;
+		if(selectedMenuItem<0){
+			selectedMenuItem=menuItems.size()-1;
+		}
+		menuItems.get(selectedMenuItem).setSelected(true);
+	}
+	private void menuDown(){
+		menuItems.get(selectedMenuItem).setSelected(false);
+		selectedMenuItem++;
+		if(selectedMenuItem>=menuItems.size()){
+			selectedMenuItem=0;
+		}
+		menuItems.get(selectedMenuItem).setSelected(true);
+	}
+	private void menuActivated(){
+		switch(selectedMenuItem){
+			case 0:
+				BRGE.toggleFPS();
+				break;
+			case 1:
+				BRGE.toggleShadows();
+				menuItems.get(selectedMenuItem).setText("Draw Shadows ("+BRGE.getDrawShadows()+")");
+				break;
+			case 2:
+				game.loadLevel(0);
+				break;
 		}
 	}
 }
